@@ -52,6 +52,18 @@ export default {
   profile_licence: "Licencia",
   profile_car: "Mi Coche",
   profile_logout: "Cerrar sesión",
+  // Time labels
+  time_12min: "hace 12 min",
+  time_1h: "hace 1 h",
+  time_3h: "hace 3 h",
+  time_yesterday: "ayer",
+  // Feed posts
+  post_1_text: "Primeras vueltas en Jerez con el GT3 — el Sector 2 es increíble. ¿Alguien más por aquí hoy?",
+  post_2_text: "Consejo: las zonas de frenada en el Viraje 6 son brutales al salir del sector rápido. Llegué tarde dos veces hasta que adelanté mi punto de frenada 20 m.",
+  post_3_text: "Lambo Huracán recién autorizado para Navarra. Sesión el sábado a las 09:00 — ¿alguien se apunta?",
+  post_4_text: "Airfield Rota es un lugar único. Sin límite de ruido y la larga recta te permite conseguir cifras serias con el R8.",
+  post_5_text: "¿Alguien ha usado el seguro integrado de TrackSwap? ¿Merece la pena comparado con tu propia póliza?",
+  community_highlight_text: "Carlos R. ha registrado la vuelta más rápida esta semana",
   // Community
   community_drivers: "PILOTOS",
   community_title: "Comunidad",

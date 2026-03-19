@@ -4,11 +4,11 @@ import GroupDetailView from "./GroupDetailView.jsx";
 import { useLanguage } from "../i18n/index.jsx";
 
 const COMMUNITY_POSTS = [
-  { id: 1, user: "Carlos R.", avatar: "CR", time: "12 min ago", text: "First laps at Jerez in the GT3 — Sector 2 is incredible. Anyone else out there today?", likes: 24, comments: 8, tag: "Jerez", color: "#C0392B" },
-  { id: 2, user: "Laura T.", avatar: "LT", time: "1 h ago", text: "Tip: the braking zones into Turn 6 are brutal coming out of the fast sector. I was late twice until I moved my braking point 20 m earlier.", likes: 41, comments: 15, tag: "Tip", color: "#D35400" },
-  { id: 3, user: "Marco V.", avatar: "MV", time: "3 h ago", text: "Lambo Huracán just cleared for Navarra. Session Saturday at 09:00 — anyone want to meet up?", likes: 17, comments: 6, tag: "Navarra", color: "#D35400" },
-  { id: 4, user: "Sergio P.", avatar: "SP", time: "yesterday", text: "Airfield Rota is a unique venue. No noise limit and the long straight lets you put up some serious numbers in the R8.", likes: 33, comments: 11, tag: "Airfield", color: "#1A6B3C" },
-  { id: 5, user: "Sophie L.", avatar: "SL", time: "yesterday", text: "Has anyone used the integrated TrackSwap insurance? Is it worth it compared to your own policy?", likes: 12, comments: 22, tag: "Question", color: "#2471A3" },
+  { id: 1, user: "Carlos R.", avatar: "CR", time: "time_12min", text: "post_1_text", likes: 24, comments: 8, tag: "Jerez", color: "#C0392B" },
+  { id: 2, user: "Laura T.", avatar: "LT", time: "time_1h",    text: "post_2_text", likes: 41, comments: 15, tag: "Tip", color: "#D35400" },
+  { id: 3, user: "Marco V.", avatar: "MV", time: "time_3h",    text: "post_3_text", likes: 17, comments: 6, tag: "Navarra", color: "#D35400" },
+  { id: 4, user: "Sergio P.", avatar: "SP", time: "time_yesterday", text: "post_4_text", likes: 33, comments: 11, tag: "Airfield", color: "#1A6B3C" },
+  { id: 5, user: "Sophie L.", avatar: "SL", time: "time_yesterday", text: "post_5_text", likes: 12, comments: 22, tag: "Question", color: "#2471A3" },
 ];
 
 const GROUPS = [
@@ -129,7 +129,7 @@ export default function CommunityScreen() {
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg,#FFD700,#FFA500)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: "#111" }}>CR</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "Georgia,serif", fontSize: 14, fontWeight: 700, color: "white" }}>Carlos R. set the fastest lap this week</div>
+                  <div style={{ fontFamily: "Georgia,serif", fontSize: 14, fontWeight: 700, color: "white" }}>{t("community_highlight_text")}</div>
                   <div style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", marginTop: 2 }}>BMW M4 GT3 · <span style={{ color: "#FFD700" }}>1:38.241</span> at Jerez</div>
                 </div>
                 <Icon name="chevron_right" size={14} color="#C0392B" />
@@ -143,7 +143,7 @@ export default function CommunityScreen() {
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: "Georgia,serif", fontSize: 13, fontWeight: 700, color: "white" }}>{post.user}</div>
-                <div style={{ fontFamily: "monospace", fontSize: 10, color: "#aaa", letterSpacing: 1 }}>{post.time}</div>
+                <div style={{ fontFamily: "monospace", fontSize: 10, color: "#aaa", letterSpacing: 1 }}>{t(post.time)}</div>
               </div>
               <div style={{ background: "#1a1a1a", borderRadius: 20, padding: "4px 10px", display: "flex", alignItems: "center", gap: 5 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: post.color }} />
@@ -151,7 +151,7 @@ export default function CommunityScreen() {
               </div>
             </div>
             <div style={{ fontFamily: "Georgia,serif", fontSize: 13, color: "#ccc", lineHeight: 1.55, marginBottom: 14 }}>
-              {post.text}
+              {t(post.text)}
             </div>
             <div style={{ display: "flex", gap: 20 }}>
               <button onClick={() => toggleLike(post.id)} aria-label={`Like post by ${post.user}`} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0 }}>
