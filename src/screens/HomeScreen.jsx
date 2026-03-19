@@ -67,7 +67,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
                 fontWeight: 700,
               }}
             >
-              GOOD MORNING, ALEX
+              {t("home_greeting")}, ALEX
             </div>
             <div
               style={{
@@ -78,9 +78,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
                 lineHeight: 1.15,
               }}
             >
-              Find your
-              <br />
-              next track day.
+              {t("home_tagline")}
             </div>
           </div>
         </div>
@@ -137,7 +135,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
               fontWeight: 700,
             }}
           >
-            GO
+            {t("home_go")}
           </button>
         </form>
       </div>
@@ -152,28 +150,37 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
           flexShrink: 0,
         }}
       >
-        {FILTERS.map((f) => (
-          <button
-            key={f}
-            className="ts-filter"
-            onClick={() => setFilter(f)}
-            aria-pressed={filter === f}
-            style={{
-              padding: "11px 18px",
-              minHeight: 44,
-              borderRadius: 22,
-              fontSize: 12,
-              fontFamily: "monospace",
-              letterSpacing: 1,
-              background: filter === f ? "#FF4500" : "#151515",
-              color: filter === f ? "white" : "#aaa",
-              border: filter === f ? "2.5px solid #FF4500" : "1.5px solid #222",
-              fontWeight: filter === f ? 800 : 500,
-            }}
-          >
-            {f.toUpperCase()}
-          </button>
-        ))}
+        {FILTERS.map((f) => {
+          const filterLabelKey = {
+            "All": "filter_all",
+            "Circuit": "filter_circuit",
+            "Karting": "filter_karting",
+            "Bring Car": "filter_bring_car",
+            "Car Provided": "filter_car_provided",
+          }[f] || f;
+          return (
+            <button
+              key={f}
+              className="ts-filter"
+              onClick={() => setFilter(f)}
+              aria-pressed={filter === f}
+              style={{
+                padding: "11px 18px",
+                minHeight: 44,
+                borderRadius: 22,
+                fontSize: 12,
+                fontFamily: "monospace",
+                letterSpacing: 1,
+                background: filter === f ? "#FF4500" : "#151515",
+                color: filter === f ? "white" : "#aaa",
+                border: filter === f ? "2.5px solid #FF4500" : "1.5px solid #222",
+                fontWeight: filter === f ? 800 : 500,
+              }}
+            >
+              {t(filterLabelKey).toUpperCase()}
+            </button>
+          );
+        })}
       </div>
 
       {/* Scrollable content */}
@@ -201,7 +208,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
                   fontWeight: 600,
                 }}
               >
-                HOT THIS WEEK
+                {t("home_hot")}
               </h2>
             </div>
             <div
@@ -311,7 +318,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
                             marginLeft: 4,
                           }}
                         >
-                          /session
+                          {t("home_per_session")}
                         </span>
                       </div>
                       <div
@@ -326,7 +333,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
                           border: `1px solid ${v.available ? "#4CAF5044" : "#F4433644"}`,
                         }}
                       >
-                        {v.available ? "OPEN" : "FULL"}
+                        {v.available ? t("home_open") : t("home_full")}
                       </div>
                     </div>
                   </div>
@@ -347,7 +354,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
             marginBottom: 12,
           }}
         >
-          {filtered.length} VENUES FOUND
+          {filtered.length} {t("home_venues_found")}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {filtered.map((v, i) => (
@@ -487,7 +494,7 @@ const HomeScreen = ({ onVenue, favorites, toggleFav }) => {
                 >
                   <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
                     <span style={{ fontFamily: "Georgia,serif", fontSize: 18, fontWeight: 800, color: "white" }}>{v.price} €</span>
-                    <span style={{ fontFamily: "monospace", fontSize: 10, color: "#666", fontWeight: 700 }}>/SESSION</span>
+                    <span style={{ fontFamily: "monospace", fontSize: 10, color: "#666", fontWeight: 700 }}>{t("home_per_session").toUpperCase()}</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                     <Icon name="star" size={12} color="#FFD700" />
