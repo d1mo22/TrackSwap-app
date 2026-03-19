@@ -54,7 +54,7 @@ export default function BookingsScreen({ onStats, onBriefing, onSelect, bookings
                 <div style={{ flex: 1, padding: "14px 16px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4, alignItems: "flex-start" }}>
                     <div style={{ fontFamily: "Georgia,serif", fontSize: 14, fontWeight: 700, color: "white", flex: 1, paddingRight: 8 }}>{b.name}</div>
-                    <div style={{ background: b.status === "Upcoming" ? "#0d1a0d" : "#1a1a1a", borderRadius: 20, padding: "2px 8px", fontFamily: "monospace", fontSize: 8, color: b.status === "Upcoming" ? "#4CAF50" : "#888", fontWeight: 800 }}>
+                    <div style={{ background: b.status === "Upcoming" ? "#0d1a0d" : "#1a1a1a", borderRadius: 20, padding: "4px 12px", fontFamily: "monospace", fontSize: 11, color: b.status === "Upcoming" ? "#4CAF50" : "#888", fontWeight: 800, letterSpacing: 1 }}>
                       {b.status.toUpperCase()}
                     </div>
                   </div>
