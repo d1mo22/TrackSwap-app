@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Icon from "../components/Icon.jsx";
 import GroupDetailView from "./GroupDetailView.jsx";
+import { useLanguage } from "../i18n/index.jsx";
 
 const COMMUNITY_POSTS = [
   { id: 1, user: "Carlos R.", avatar: "CR", time: "12 min ago", text: "First laps at Jerez in the GT3 — Sector 2 is incredible. Anyone else out there today?", likes: 24, comments: 8, tag: "Jerez", color: "#C0392B" },
@@ -85,6 +86,7 @@ const GROUPS = [
 ];
 
 export default function CommunityScreen() {
+  const { t } = useLanguage();
   const [ctab, setCtab] = useState("feed");
   const [liked, setLiked] = useState(new Set());
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -95,16 +97,20 @@ export default function CommunityScreen() {
       {/* Header */}
       <div style={{ padding: "52px 20px 0", flexShrink: 0 }}>
         <div style={{ fontFamily: "monospace", fontSize: 12, color: "#FF4500", letterSpacing: 3, marginBottom: 4 }}>
-          DRIVERS
+          {t("community_drivers")}
         </div>
         <div style={{ fontFamily: "Georgia,serif", fontSize: 26, fontWeight: 700, color: "white", marginBottom: 16 }}>
-          Community
+          {t("community_title")}
         </div>
         {/* Tabs */}
         <div style={{ display: "flex", gap: 0, borderBottom: "1px solid #181818" }}>
-          {["feed", "groups", "events"].map((t) => (
-            <button key={t} onClick={() => setCtab(t)} aria-pressed={ctab === t} style={{ background: "none", border: "none", cursor: "pointer", padding: "10px 18px", fontFamily: "monospace", fontSize: 12, letterSpacing: 1, color: ctab === t ? "#FF4500" : "#aaa", borderBottom: ctab === t ? "2px solid #FF4500" : "2px solid transparent", transition: "color 0.2s, border-color 0.2s", marginBottom: -1 }}>
-              {t.toUpperCase()}
+          {[
+            { id: "feed",   label: t("community_tab_feed") },
+            { id: "groups", label: t("community_tab_groups") },
+            { id: "events", label: t("community_tab_events") },
+          ].map((tab) => (
+            <button key={tab.id} onClick={() => setCtab(tab.id)} aria-pressed={ctab === tab.id} style={{ background: "none", border: "none", cursor: "pointer", padding: "10px 18px", fontFamily: "monospace", fontSize: 12, letterSpacing: 1, color: ctab === tab.id ? "#FF4500" : "#aaa", borderBottom: ctab === tab.id ? "2px solid #FF4500" : "2px solid transparent", transition: "color 0.2s, border-color 0.2s", marginBottom: -1 }}>
+              {tab.label.toUpperCase()}
             </button>
           ))}
         </div>
@@ -118,7 +124,7 @@ export default function CommunityScreen() {
             <button type="button" onClick={() => { setCtab("groups"); setSelectedGroup(GROUPS[0]); }} style={{ display: "block", width: "100%", textAlign: "left", marginBottom: 14, borderRadius: 16, background: "linear-gradient(135deg,rgba(192,57,43,0.15),rgba(192,57,43,0.05))", border: "1px solid rgba(192,57,43,0.3)", padding: "14px 16px", cursor: "pointer" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-                <span style={{ fontFamily: "monospace", fontSize: 10, color: "#FFD700", letterSpacing: 2 }}>WEEKLY HIGHLIGHT · GT SPAIN</span>
+                <span style={{ fontFamily: "monospace", fontSize: 10, color: "#FFD700", letterSpacing: 2 }}>{t("community_weekly_highlight")} · GT SPAIN</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg,#FFD700,#FFA500)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: "#111" }}>CR</div>
@@ -172,7 +178,7 @@ export default function CommunityScreen() {
               <GroupDetailView group={selectedGroup} onBack={() => setSelectedGroup(null)} />
             ) : (
               <>
-                <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa", letterSpacing: 2, marginBottom: 14 }}>POPULAR GROUPS</div>
+                <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa", letterSpacing: 2, marginBottom: 14 }}>{t("community_popular_groups")}</div>
                 {GROUPS.map((g) => (
                   <button type="button" key={g.name} onClick={() => setSelectedGroup(g)} style={{ display: "flex", width: "100%", background: "none", border: "none", borderBottom: "1px solid #141414", textAlign: "left", alignItems: "center", gap: 14, padding: "14px 0", cursor: "pointer" }}>
                     <div style={{ width: 44, height: 44, borderRadius: 14, background: `${g.color}22`, border: `1px solid ${g.color}44`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -180,7 +186,7 @@ export default function CommunityScreen() {
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: "Georgia,serif", fontSize: 14, fontWeight: 700, color: "white", marginBottom: 2 }}>{g.name}</div>
-                      <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa", letterSpacing: 1 }}>{g.members} MEMBERS · {g.tag.toUpperCase()}</div>
+                      <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa", letterSpacing: 1 }}>{g.members} {t("community_members")} · {g.tag.toUpperCase()}</div>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <div style={{ fontFamily: "monospace", fontSize: 10, color: g.color, background: `${g.color}15`, border: `1px solid ${g.color}33`, borderRadius: 20, padding: "4px 10px", letterSpacing: 1, display: "flex", alignItems: "center", gap: 4 }}>
@@ -199,8 +205,8 @@ export default function CommunityScreen() {
         {ctab === "events" && (
           <div style={{ textAlign: "center", padding: "50px 20px" }}>
             <Icon name="users" size={40} color="#555" />
-            <div style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "#aaa", marginTop: 16, marginBottom: 8 }}>Coming Soon</div>
-            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#888", letterSpacing: 1 }}>DRIVER MEETUPS & EVENTS</div>
+            <div style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "#aaa", marginTop: 16, marginBottom: 8 }}>{t("community_coming_soon")}</div>
+            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#888", letterSpacing: 1 }}>{t("community_events_label")}</div>
           </div>
         )}
       </div>
