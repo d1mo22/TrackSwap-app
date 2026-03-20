@@ -21,7 +21,7 @@ export default function GroupDetailView({ group, onBack }) {
           <Icon name="chevron_left" size={15} color="#aaa" />
           <span style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: 2 }}>{t("group_back")}</span>
         </button>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 7 }}>
           <div style={{ width: 48, height: 48, borderRadius: 14, background: `${group.color}22`, border: `1px solid ${group.color}55`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <Icon name="users" size={22} color={group.color} />
           </div>
