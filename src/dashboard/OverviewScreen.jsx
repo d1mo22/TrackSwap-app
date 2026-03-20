@@ -5,8 +5,10 @@ import Btn from "../components/Btn.jsx";
 import TopBar from "./TopBar.jsx";
 import { DASH as T } from "../constants/theme.js";
 import { BOOKINGS, NOISE_DATA, REVENUE_DATA, SLOTS, DAYS } from "../constants/dashboard.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const OverviewScreen = ({ setActive }) => {
+	const { t } = useLanguage();
 	const upcomingBookings = BOOKINGS.filter(
 		(b) => b.status !== "cancelled",
 	).slice(0, 4);
@@ -17,12 +19,12 @@ const OverviewScreen = ({ setActive }) => {
 	return (
 		<div style={{ animation: "fadeIn 0.3s ease" }}>
 			<TopBar
-				title="Good morning, José."
+				title={t("d_greeting")}
 				subtitle="JEREZ CIRCUIT · MARCH 2026"
 				actions={
 					<>
-						<Btn label="EXPORT REPORT" icon="download" />
-						<Btn label="ADD SLOT" icon="plus" primary />
+						<Btn label={t("d_export_report")} icon="download" />
+						<Btn label={t("d_add_slot")} icon="plus" primary />
 					</>
 				}
 			/>
@@ -37,7 +39,7 @@ const OverviewScreen = ({ setActive }) => {
 				}}
 			>
 				<StatCard
-					label="Revenue MTD"
+					label={t("d_revenue_mtd")}
 					value="€7,480"
 					sub="vs €5,200 last month"
 					icon="trending_up"
@@ -46,7 +48,7 @@ const OverviewScreen = ({ setActive }) => {
 					delay={0}
 				/>
 				<StatCard
-					label="Sessions Booked"
+					label={t("d_sessions_booked")}
 					value="24"
 					sub="of 31 slots available"
 					icon="ticket"
@@ -55,16 +57,16 @@ const OverviewScreen = ({ setActive }) => {
 					delay={0.05}
 				/>
 				<StatCard
-					label="Utilisation"
+					label={t("d_utilisation")}
 					value="77%"
-					sub="avg this week"
+					sub={t("d_avg_this_week")}
 					icon="chart"
 					accent={T.blue}
 					delta={12}
 					delay={0.1}
 				/>
 				<StatCard
-					label="Avg Rating"
+					label={t("d_avg_rating")}
 					value="4.9 ★"
 					sub="from 214 reviews"
 					icon="star"
@@ -110,10 +112,10 @@ const OverviewScreen = ({ setActive }) => {
 							<div style={{ display: "flex", gap: 8 }}>
 								<div style={{ display: "flex", gap: 14, alignItems: "center" }}>
 									{[
-										{ color: T.green, label: "Booked" },
-										{ color: T.yellow, label: "Reserved" },
-										{ color: "#D0C8BF", label: "Blocked" },
-										{ color: T.blue, label: "Open" },
+										{ color: T.green, label: t("d_cal_booked") },
+										{ color: T.yellow, label: t("d_cal_reserved") },
+										{ color: "#D0C8BF", label: t("d_cal_blocked") },
+										{ color: T.blue, label: t("d_cal_open") },
 									].map((l) => (
 										<div
 											key={l.label}
@@ -153,7 +155,7 @@ const OverviewScreen = ({ setActive }) => {
 										marginLeft: 8,
 									}}
 								>
-									VIEW FULL →
+									{t("d_view_full")}
 								</button>
 							</div>
 						</div>
@@ -279,7 +281,7 @@ const OverviewScreen = ({ setActive }) => {
 									color: T.text,
 								}}
 							>
-								Upcoming Bookings
+								{t("d_upcoming_bookings")}
 							</div>
 							<button
 								onClick={() => setActive("bookings")}
@@ -293,7 +295,7 @@ const OverviewScreen = ({ setActive }) => {
 									letterSpacing: 1,
 								}}
 							>
-								VIEW ALL →
+								{t("d_view_all")}
 							</button>
 						</div>
 						<div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -406,7 +408,7 @@ const OverviewScreen = ({ setActive }) => {
 									color: "white",
 								}}
 							>
-								Noise Monitor
+								{t("d_noise_monitor")}
 							</div>
 							<div style={{ display: "flex", alignItems: "center", gap: 6 }}>
 								<div
@@ -426,7 +428,7 @@ const OverviewScreen = ({ setActive }) => {
 										letterSpacing: 1,
 									}}
 								>
-									LIVE
+									{t("d_live")}
 								</span>
 							</div>
 						</div>
@@ -463,7 +465,7 @@ const OverviewScreen = ({ setActive }) => {
 										letterSpacing: 2,
 									}}
 								>
-									dB CURRENT
+									{t("d_db_current")}
 								</div>
 							</div>
 							<div style={{ textAlign: "right" }}>
@@ -484,7 +486,7 @@ const OverviewScreen = ({ setActive }) => {
 										letterSpacing: 1,
 									}}
 								>
-									LIMIT
+									{t("d_limit")}
 								</div>
 							</div>
 						</div>
@@ -533,7 +535,7 @@ const OverviewScreen = ({ setActive }) => {
 									color: "#4CAF50",
 								}}
 							>
-								SAFE ZONE
+								{t("d_safe_zone")}
 							</div>
 							<div
 								style={{ fontFamily: "monospace", fontSize: 9, color: "#888" }}
@@ -572,7 +574,7 @@ const OverviewScreen = ({ setActive }) => {
 								letterSpacing: 1,
 							}}
 						>
-							LAST 24 HOURS
+							{t("d_last_24h")}
 						</div>
 					</div>
 
@@ -595,7 +597,7 @@ const OverviewScreen = ({ setActive }) => {
 								marginBottom: 16,
 							}}
 						>
-							Revenue Trend
+							{t("d_revenue_trend")}
 						</div>
 						<div
 							style={{
@@ -659,7 +661,7 @@ const OverviewScreen = ({ setActive }) => {
 										letterSpacing: 1,
 									}}
 								>
-									THIS MONTH
+									{t("d_this_month")}
 								</div>
 								<div
 									style={{
@@ -685,7 +687,7 @@ const OverviewScreen = ({ setActive }) => {
 										letterSpacing: 1,
 									}}
 								>
-									VS LAST MONTH
+									{t("d_vs_last_month")}
 								</div>
 								<div
 									style={{
@@ -719,20 +721,20 @@ const OverviewScreen = ({ setActive }) => {
 								marginBottom: 14,
 							}}
 						>
-							Quick Actions
+							{t("d_quick_actions")}
 						</div>
 						<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
 							{[
 								{
 									icon: "plus",
-									label: "Add availability slots",
+									label: t("d_action_add_slots"),
 									color: T.green,
 								},
-								{ icon: "lock", label: "Block dates", color: T.textMid },
-								{ icon: "tag", label: "Update pricing rules", color: T.orange },
+								{ icon: "lock", label: t("d_action_block_dates"), color: T.textMid },
+								{ icon: "tag", label: t("d_action_update_pricing"), color: T.orange },
 								{
 									icon: "zap",
-									label: "Enable EV day (no noise limit)",
+									label: t("d_action_ev_day"),
 									color: T.blue,
 								},
 							].map((a) => (

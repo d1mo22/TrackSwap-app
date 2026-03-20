@@ -1,20 +1,21 @@
 import { useState } from "react";
 import Icon from "../components/Icon.jsx";
-
-const VEHICLE_INSURANCE = [
-  { id: "v_none", name: "NO COVER", price: 0, desc: "Third-party liability only. You are liable for all damage.", coverage: "€0", color: "#888" },
-  { id: "v_std", name: "STANDARD", price: 25, desc: "On-track damage + liability. Provided by Reis.", coverage: "€5,000", color: "#2471A3" },
-  { id: "v_adv", name: "ADVANCED", price: 55, desc: "Performance cover for high-value GT vehicles.", coverage: "€25,000", color: "#D35400" },
-  { id: "v_pro", name: "PRO RACING", price: 95, desc: "Full comprehensive cover including transport.", coverage: "€75,000", color: "#FF4500" }
-];
-
-const DRIVER_INSURANCE = [
-  { id: "d_std", name: "PERSONAL ACCIDENT", price: 10, desc: "Basic medical cover and personal liability.", coverage: "€10,000", color: "#2471A3" },
-  { id: "d_pro", name: "PRO DRIVER", price: 25, desc: "Extended medical + income protection.", coverage: "€50,000", color: "#FF4500" }
-];
+import { useLanguage } from "../i18n/index.jsx";
 
 export default function InsuranceSelectionScreen({ venue, cars = [], briefingComplete, onSelect, onBack }) {
+  const { t } = useLanguage();
   const isBYO = venue.type !== "Karting";
+
+  const VEHICLE_INSURANCE = [
+    { id: "v_none", name: t("ins_name_no_cover"), price: 0, desc: t("ins_plan_none_desc"), coverage: "€0", color: "#888" },
+    { id: "v_std", name: t("ins_name_standard"), price: 25, desc: t("ins_plan_std_desc"), coverage: "€5,000", color: "#2471A3" },
+    { id: "v_adv", name: t("ins_name_advanced"), price: 55, desc: t("ins_plan_adv_desc"), coverage: "€25,000", color: "#D35400" },
+    { id: "v_pro", name: t("ins_name_pro_racing"), price: 95, desc: t("ins_plan_pro_desc"), coverage: "€75,000", color: "#FF4500" }
+  ];
+  const DRIVER_INSURANCE = [
+    { id: "d_std", name: t("ins_name_personal_accident"), price: 10, desc: t("ins_plan_accident_desc"), coverage: "€10,000", color: "#2471A3" },
+    { id: "d_pro", name: t("ins_name_pro_driver"), price: 25, desc: t("ins_plan_prodriver_desc"), coverage: "€50,000", color: "#FF4500" }
+  ];
   const [selectedCarId, setSelectedCarId] = useState(() => cars.length > 0 ? cars[0].id : null);
   const [selectedId, setSelectedId] = useState(isBYO ? "v_std" : "d_std");
 
@@ -29,12 +30,12 @@ export default function InsuranceSelectionScreen({ venue, cars = [], briefingCom
           <Icon name="chevron_left" size={17} color="white" />
         </button>
         <div>
-          <div style={{ fontFamily: "Georgia,serif", fontSize: 19, fontWeight: 700, color: "white" }}>Protection Plan</div>
+          <div style={{ fontFamily: "Georgia,serif", fontSize: 19, fontWeight: 700, color: "white" }}>{t("ins_protection_plan")}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa" }}>STEP 1 OF 2</div>
+            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa" }}>{t("ins_step_1")}</div>
             {briefingComplete && (
               <div style={{ fontFamily: "monospace", fontSize: 10, color: "#4CAF50", fontWeight: 700, padding: "2px 6px", background: "rgba(76,175,80,0.1)", borderRadius: 4 }}>
-                BRIEFING OK
+                {t("ins_briefing_ok")}
               </div>
             )}
           </div>
@@ -44,11 +45,11 @@ export default function InsuranceSelectionScreen({ venue, cars = [], briefingCom
       <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 120px" }}>
         {isBYO && (
           <div style={{ marginBottom: 32 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>WHICH VEHICLE ARE YOU BRINGING?</div>
+            <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>{t("ins_which_vehicle")}</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {cars.length === 0 ? (
                 <div style={{ padding: 20, background: "#111", borderRadius: 12, border: "2px dashed #222", textAlign: "center" }}>
-                   <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "#888" }}>No cars in your garage.</div>
+                   <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "#888" }}>{t("ins_no_cars")}</div>
                 </div>
               ) : (
                 cars.map(car => (
@@ -77,7 +78,7 @@ export default function InsuranceSelectionScreen({ venue, cars = [], briefingCom
 
         <div style={{ marginBottom: 12 }}>
           <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>
-            {isBYO ? "VEHICLE PROTECTION" : "DRIVER PROTECTION"}
+            {isBYO ? t("ins_vehicle_protection") : t("ins_driver_protection")}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {options.map((type) => {
@@ -106,7 +107,7 @@ export default function InsuranceSelectionScreen({ venue, cars = [], briefingCom
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, alignItems: "center" }}>
                       <span style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 800, color: isSel ? "white" : "#aaa", letterSpacing: 1 }}>{type.name}</span>
                       <span style={{ fontFamily: "Georgia,serif", fontSize: 16, fontWeight: 800, color: isSel ? type.color : "#888" }}>
-                        {type.price === 0 ? "FREE" : `+${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(type.price)}`}
+                        {type.price === 0 ? t("ins_free") : `+${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(type.price)}`}
                       </span>
                     </div>
                     <div style={{ fontFamily: "Georgia,serif", fontSize: 12, color: isSel ? "#ccc" : "#888", lineHeight: 1.5, marginBottom: 10, fontWeight: 500 }}>
@@ -114,7 +115,7 @@ export default function InsuranceSelectionScreen({ venue, cars = [], briefingCom
                     </div>
                     {type.id !== "v_none" && (
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ fontFamily: "monospace", fontSize: 10, color: type.color, fontWeight: 800 }}>{isBYO ? "COVERAGE:" : "PERSONAL LIMIT:"}</div>
+                        <div style={{ fontFamily: "monospace", fontSize: 10, color: type.color, fontWeight: 800 }}>{isBYO ? t("ins_coverage") : t("ins_personal_limit")}</div>
                         <div style={{ fontFamily: "monospace", fontSize: 10, color: "white", background: "#222", padding: "3px 10px", borderRadius: 6, fontWeight: 700 }}>{type.coverage}</div>
                       </div>
                     )}
@@ -145,7 +146,7 @@ export default function InsuranceSelectionScreen({ venue, cars = [], briefingCom
             boxShadow: isBYO && !selectedCarId ? "none" : `0 12px 32px ${selectedPlan.color}40`,
           }}
         >
-          {isBYO && !selectedCarId ? "SELECT A VEHICLE" : "CONTINUE TO CHECKOUT"}
+          {isBYO && !selectedCarId ? t("ins_select_vehicle") : t("ins_continue")}
         </button>
       </div>
     </div>

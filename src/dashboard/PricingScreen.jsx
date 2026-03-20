@@ -3,14 +3,16 @@ import Icon from "../components/Icon.jsx";
 import Btn from "../components/Btn.jsx";
 import TopBar from "./TopBar.jsx";
 import { DASH as T } from "../constants/theme.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const PricingScreen = () => {
+	const { t } = useLanguage();
 	const [dynamicEnabled, setDynamicEnabled] = useState(true);
 	const [basePrice, setBasePrice] = useState(295);
 
 	return (
 		<div style={{ animation: "fadeIn 0.3s ease" }}>
-			<TopBar title="Dynamic Pricing" subtitle="AI-POWERED PRICING ENGINE" />
+			<TopBar title={t("d_pricing_title")} subtitle={t("d_ai_engine")} />
 
 			<div
 				style={{
@@ -56,13 +58,13 @@ const PricingScreen = () => {
 									color: T.textLight,
 								}}
 							>
-								Adjust prices based on demand, weather & events
+								{t("d_ai_desc")}
 							</div>
 						</div>
 						<button
 							role="switch"
 							aria-checked={dynamicEnabled}
-							aria-label="AI Dynamic Pricing"
+							aria-label={t("d_ai_pricing")}
 							onClick={() => setDynamicEnabled(!dynamicEnabled)}
 							onKeyDown={(e) =>
 								e.key === "Enter" && setDynamicEnabled((v) => !v)
@@ -112,8 +114,8 @@ const PricingScreen = () => {
 							}}
 						>
 							{dynamicEnabled
-								? "✓ AI PRICING ACTIVE — NEXT REVIEW IN 2H"
-								: "MANUAL PRICING MODE ACTIVE"}
+								? t("d_ai_active")
+								: t("d_manual_mode")}
 						</div>
 					</div>
 				</div>
@@ -136,7 +138,7 @@ const PricingScreen = () => {
 							marginBottom: 16,
 						}}
 					>
-						Base Session Price
+						{t("d_base_price")}
 					</div>
 					<div
 						style={{
@@ -180,7 +182,7 @@ const PricingScreen = () => {
 									letterSpacing: 2,
 								}}
 							>
-								PER 2H SESSION
+								{t("d_per_session")}
 							</div>
 						</div>
 						<button
@@ -229,7 +231,7 @@ const PricingScreen = () => {
 							color: T.text,
 						}}
 					>
-						AI Price Suggestions
+						{t("d_ai_suggestions")}
 					</div>
 					<div
 						style={{
@@ -240,7 +242,7 @@ const PricingScreen = () => {
 							letterSpacing: 1,
 						}}
 					>
-						UPDATED 30 MIN AGO
+						{t("d_updated_ago")}
 					</div>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -335,7 +337,7 @@ const PricingScreen = () => {
 										color: s.change.startsWith("+") ? T.green : T.red,
 									}}
 								>
-									{s.change} vs base
+									{s.change} {t("d_vs_base")}
 								</div>
 							</div>
 							<div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
@@ -393,7 +395,7 @@ const PricingScreen = () => {
 						marginBottom: 16,
 					}}
 				>
-					Pricing Rules
+					{t("d_pricing_rules")}
 				</div>
 				<div
 					style={{
@@ -404,37 +406,37 @@ const PricingScreen = () => {
 				>
 					{[
 						{
-							label: "Weekend Premium",
+							label: t("d_rule_weekend"),
 							value: "+15%",
 							icon: "trending_up",
 							color: T.orange,
 						},
 						{
-							label: "Early Bird Discount",
+							label: t("d_rule_earlybird"),
 							value: "−10%",
 							icon: "tag",
 							color: T.blue,
 						},
 						{
-							label: "Last-Minute Price",
+							label: t("d_rule_lastmin"),
 							value: "−20%",
 							icon: "refresh",
 							color: T.green,
 						},
 						{
-							label: "Min Price Floor",
+							label: t("d_rule_floor"),
 							value: "€180",
 							icon: "lock",
 							color: T.textMid,
 						},
 						{
-							label: "Max Price Ceiling",
+							label: t("d_rule_ceiling"),
 							value: "€500",
 							icon: "zap",
 							color: T.yellow,
 						},
 						{
-							label: "EV Day Bonus",
+							label: t("d_rule_ev"),
 							value: "+0%",
 							icon: "zap",
 							color: T.green,

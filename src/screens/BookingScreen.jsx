@@ -53,7 +53,7 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
             marginBottom: 6,
           }}
         >
-          You're booked.
+          {t("booking_youre_booked")}
         </div>
         <div
           style={{
@@ -65,7 +65,7 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
             textAlign: "center",
           }}
         >
-          CONFIRMATION SENT TO YOUR EMAIL
+          {t("booking_email_sent")}
         </div>
         <div
           style={{
@@ -78,12 +78,12 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
           }}
         >
           {[
-            { l: "VENUE", v: venue.name },
-            { l: "DATE", v: "Sat 1 Mar 2026" },
-            { l: "SESSION", v: session },
-            { l: "VEHICLE", v: selectedCar ? [selectedCar.brand, selectedCar.model].filter(Boolean).join(" ") || selectedCar.plate : "—" },
-            { l: "INSURANCE", v: insurance.name },
-            { l: "TOTAL PAID", v: new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(totalPrice) },
+            { l: t("booking_label_venue"), v: venue.name },
+            { l: t("booking_label_date"), v: "Sat 1 Mar 2026" },
+            { l: t("booking_label_session"), v: session },
+            { l: t("booking_label_vehicle"), v: selectedCar ? [selectedCar.brand, selectedCar.model].filter(Boolean).join(" ") || selectedCar.plate : "—" },
+            { l: t("booking_label_insurance"), v: insurance.name },
+            { l: t("booking_label_total_paid"), v: new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(totalPrice), isTotal: true },
           ].map((r) => (
             <div
               key={r.l}
@@ -108,8 +108,8 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
                 style={{
                   fontFamily: "Georgia,serif",
                   fontSize: 13,
-                  color: r.l === "TOTAL PAID" ? "#FF4500" : "white",
-                  fontWeight: r.l === "TOTAL PAID" ? 700 : 400,
+                  color: r.isTotal ? "#FF4500" : "white",
+                  fontWeight: r.isTotal ? 700 : 400,
                 }}
               >
                 {r.v}
@@ -132,7 +132,7 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
             cursor: "pointer",
           }}
         >
-          BACK TO EXPLORE
+          {t("booking_back_explore")}
         </button>
       </div>
     );
@@ -183,7 +183,7 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
               color: "white",
             }}
           >
-            Confirm Booking
+            {t("booking_confirm_title")}
           </div>
           <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa" }}>
             {venue.name} · {session}
@@ -262,7 +262,7 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
                 fontWeight: 700,
               }}
             >
-              SAFETY BRIEFING {briefingComplete ? "COMPLETE" : "PENDING"}
+              {briefingComplete ? t("booking_briefing_complete") : t("booking_briefing_pending")}
             </div>
             <div
               style={{
@@ -272,8 +272,8 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
               }}
             >
               {briefingComplete
-                ? "8-min video watched · Digital waiver signed"
-                : "Required before session start · Can be done at venue"}
+                ? t("booking_briefing_done_desc")
+                : t("booking_briefing_todo_desc")}
             </div>
           </div>
         </div>
@@ -309,7 +309,7 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
                 {insurance.name}
               </div>
               <div style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "#ccc" }}>
-                Coverage up to {insurance.coverage}
+                {`${t("booking_coverage_up_to")} ${insurance.coverage}`}
               </div>
             </div>
           </div>
@@ -325,18 +325,18 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
               cursor: "pointer"
             }}
           >
-            CHANGE
+            {t("booking_change")}
           </button>
         </div>
 
         {/* Car selector */}
         {isBYO ? (
           <div style={{ background: "#111", borderRadius: 13, padding: "14px 16px", border: "1.5px solid #1a1a1a", marginBottom: 12 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>YOUR VEHICLE</div>
+            <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>{t("booking_your_vehicle")}</div>
             {cars.length === 0 ? (
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <Icon name="car" size={18} color="#444" />
-                <span style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "#666" }}>No vehicles saved — add one in Profile → My Garage</span>
+                <span style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "#666" }}>{t("booking_no_vehicles")}</span>
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -370,8 +370,8 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
           <div style={{ background: "#0d1a0d", borderRadius: 13, padding: "16px", border: "1.5px solid #1a2a1a", marginBottom: 12, display: "flex", gap: 12, alignItems: "center" }}>
             <Icon name="car" size={18} color="#4CAF50" />
             <div>
-              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#4CAF50", letterSpacing: 1, marginBottom: 2, fontWeight: 700 }}>VEHICLE PROVIDED</div>
-              <div style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "#aaa" }}>This venue provides the vehicle for your session.</div>
+              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#4CAF50", letterSpacing: 1, marginBottom: 2, fontWeight: 700 }}>{t("booking_vehicle_provided")}</div>
+              <div style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "#aaa" }}>{t("booking_vehicle_provided_desc")}</div>
             </div>
           </div>
         )}
@@ -394,12 +394,12 @@ export default function BookingScreen({ venue, session, insurance, preSelectedCa
               fontWeight: 700,
             }}
           >
-            PRICE BREAKDOWN
+            {t("booking_price_breakdown")}
           </div>
           {[
-            { l: "Session fee", v: new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(venue.price) },
-            { l: "Insurance", v: insurance.price > 0 ? `+${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(insurance.price)}` : "None" },
-            { l: "Platform fee", v: "Included" },
+            { l: t("booking_session_fee"), v: new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(venue.price) },
+            { l: t("booking_insurance_fee"), v: insurance.price > 0 ? `+${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(insurance.price)}` : t("booking_none") },
+            { l: t("booking_platform_fee"), v: t("detail_included") },
           ].map((r) => (
             <div
               key={r.l}

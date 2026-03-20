@@ -3,20 +3,22 @@ import StatCard from "../components/StatCard.jsx";
 import TopBar from "./TopBar.jsx";
 import { DASH as T } from "../constants/theme.js";
 import { REVENUE_DATA, UTIL_DATA } from "../constants/dashboard.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const AnalyticsScreen = () => {
+	const { t } = useLanguage();
 	const maxRevenue = Math.max(...REVENUE_DATA.map((r) => r.v));
 	const maxUtil = Math.max(...UTIL_DATA.map((u) => u.v));
 
 	return (
 		<div style={{ animation: "fadeIn 0.3s ease" }}>
 			<TopBar
-				title="Analytics"
-				subtitle="PERFORMANCE INSIGHTS"
+				title={t("d_analytics")}
+				subtitle={t("d_perf_insights")}
 				actions={
 					<>
-						<Btn label="LAST 6 MONTHS" />
-						<Btn label="EXPORT" icon="download" primary />
+						<Btn label={t("d_last_6m")} />
+						<Btn label={t("d_export")} icon="download" primary />
 					</>
 				}
 			/>
@@ -30,25 +32,25 @@ const AnalyticsScreen = () => {
 				}}
 			>
 				<StatCard
-					label="Total Revenue"
+					label={t("d_total_revenue")}
 					value="€31,080"
-					sub="last 6 months"
+					sub={t("d_last_6m_sub")}
 					icon="trending_up"
 					accent={T.orange}
 					delta={24}
 				/>
 				<StatCard
-					label="Total Sessions"
+					label={t("d_total_sessions")}
 					value="118"
-					sub="sessions completed"
+					sub={t("d_sessions_completed")}
 					icon="ticket"
 					accent={T.green}
 					delta={18}
 				/>
 				<StatCard
-					label="Avg Utilisation"
+					label={t("d_avg_util")}
 					value="68%"
-					sub="across all days"
+					sub={t("d_across_all_days")}
 					icon="chart"
 					accent={T.blue}
 				/>
@@ -80,7 +82,7 @@ const AnalyticsScreen = () => {
 							marginBottom: 20,
 						}}
 					>
-						Monthly Revenue
+						{t("d_monthly_revenue")}
 					</div>
 					<div
 						role="img"
@@ -173,7 +175,7 @@ const AnalyticsScreen = () => {
 							marginBottom: 20,
 						}}
 					>
-						Utilisation by Day of Week
+						{t("d_util_by_day")}
 					</div>
 					<div
 						role="img"
@@ -259,7 +261,7 @@ const AnalyticsScreen = () => {
 						marginBottom: 18,
 					}}
 				>
-					Revenue Breakdown by Stream
+					{t("d_rev_breakdown")}
 				</div>
 				<div
 					style={{
@@ -270,25 +272,25 @@ const AnalyticsScreen = () => {
 				>
 					{[
 						{
-							label: "Session Commissions",
+							label: t("d_stream_sessions"),
 							amount: "€22,400",
 							pct: 72,
 							color: T.orange,
 						},
 						{
-							label: "Insurance Referrals",
+							label: t("d_stream_insurance"),
 							amount: "€4,480",
 							pct: 14,
 							color: T.green,
 						},
 						{
-							label: "Premium Listing Fee",
+							label: t("d_stream_listing"),
 							amount: "€2,800",
 							pct: 9,
 							color: T.blue,
 						},
 						{
-							label: "Noise Hardware",
+							label: t("d_stream_hardware"),
 							amount: "€1,400",
 							pct: 5,
 							color: T.yellow,
@@ -327,7 +329,7 @@ const AnalyticsScreen = () => {
 										letterSpacing: 1,
 									}}
 								>
-									{s.pct}% OF TOTAL
+									{s.pct}% {t("d_of_total")}
 								</div>
 							</div>
 							<div

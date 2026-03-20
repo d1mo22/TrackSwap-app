@@ -5,21 +5,29 @@ import Btn from "../components/Btn.jsx";
 import TopBar from "./TopBar.jsx";
 import { DASH as T } from "../constants/theme.js";
 import { BOOKINGS } from "../constants/dashboard.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const BookingsScreen = () => {
+	const { t } = useLanguage();
 	const [filter, setFilter] = useState("all");
 	const filtered =
 		filter === "all" ? BOOKINGS : BOOKINGS.filter((b) => b.status === filter);
+	const filterLabels = {
+		all: t("filter_all"),
+		confirmed: t("d_filter_confirmed"),
+		pending: t("d_filter_pending"),
+		cancelled: t("d_filter_cancelled"),
+	};
 
 	return (
 		<div style={{ animation: "fadeIn 0.3s ease" }}>
 			<TopBar
-				title="Bookings Manager"
-				subtitle="ALL RESERVATIONS"
+				title={t("d_bookings_mgr")}
+				subtitle={t("d_all_reservations")}
 				actions={
 					<>
-						<Btn label="EXPORT CSV" icon="download" />
-						<Btn label="NEW BOOKING" icon="plus" primary />
+						<Btn label={t("d_export_csv")} icon="download" />
+						<Btn label={t("d_new_booking")} icon="plus" primary />
 					</>
 				}
 			/>
@@ -43,7 +51,7 @@ const BookingsScreen = () => {
 							transition: "background 0.15s, border-color 0.15s, color 0.15s",
 						}}
 					>
-						{f.toUpperCase()}
+						{(filterLabels[f] || f).toUpperCase()}
 					</button>
 				))}
 				<div
@@ -79,12 +87,12 @@ const BookingsScreen = () => {
 						>
 							{[
 								"ID",
-								"Driver",
-								"Vehicle",
-								"Date & Time",
-								"Price",
-								"Insured",
-								"Status",
+								t("d_col_driver"),
+								t("d_col_vehicle"),
+								t("d_col_datetime"),
+								t("d_col_price"),
+								t("d_col_insured"),
+								t("d_col_status"),
 							].map((h) => (
 								<th
 									key={h}

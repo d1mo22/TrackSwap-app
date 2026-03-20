@@ -4,7 +4,8 @@ import VenueArt from "../components/VenueArt.jsx";
 import { useLanguage } from "../i18n/index.jsx";
 
 export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const locale = lang === "es" ? "es-ES" : lang === "pt" ? "pt-PT" : "en-GB";
   const [selectedSession, setSelectedSession] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date(2026, 2, 8)); // Today: March 8, 2026
   const [tab, setTab] = useState("info");
@@ -18,10 +19,12 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
   // Calendar Helpers
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
   const startDay = new Date(viewYear, viewMonth, 1).getDay();
-  const monthNames = [
-    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
-    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
-  ];
+  const monthNames = Array.from({ length: 12 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { month: "long" }).format(new Date(2026, i, 1)).toUpperCase()
+  );
+  const dayHeaders = Array.from({ length: 7 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { weekday: "narrow" }).format(new Date(2026, 0, 4 + i))
+  );
 
   const handlePrevMonth = () => {
     if (viewYear === 2026 && viewMonth === 2) return;
@@ -202,7 +205,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
             <div
               style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa" }}
             >
-              /session
+              {t("home_per_session")}
             </div>
           </div>
         </div>
@@ -237,7 +240,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
           {[
             { icon: "ruler", label: t("detail_length").toUpperCase(), val: venue.length },
             { icon: "volume", label: t("detail_noise").toUpperCase(), val: venue.noise },
-            { icon: "shield", label: "INSURANCE", val: "Included" },
+            { icon: "shield", label: t("detail_insurance"), val: t("detail_included") },
           ].map((s) => (
             <div
               key={s.label}
@@ -296,11 +299,11 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
             border: "2px solid #1a1a1a",
           }}
         >
-          {["info", "sessions", "safety"].map((t) => (
+          {["info", "sessions", "safety"].map((tabId) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
-              aria-pressed={tab === t}
+              key={tabId}
+              onClick={() => setTab(tabId)}
+              aria-pressed={tab === tabId}
               type="button"
               style={{
                 flex: 1,
@@ -310,15 +313,15 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                 fontFamily: "monospace",
                 fontSize: 10,
                 letterSpacing: 1,
-                background: tab === t ? "#FF4500" : "transparent",
-                color: tab === t ? "white" : "#aaa",
-                border: tab === t ? "2.5px solid #FF4500" : "none",
+                background: tab === tabId ? "#FF4500" : "transparent",
+                color: tab === tabId ? "white" : "#aaa",
+                border: tab === tabId ? "2.5px solid #FF4500" : "none",
                 cursor: "pointer",
                 transition: "all 0.2s",
                 fontWeight: 700,
               }}
             >
-              {t.toUpperCase()}
+              {tabId === "info" ? t("detail_tab_info") : tabId === "sessions" ? t("detail_tab_sessions") : t("detail_tab_safety")}
             </button>
           ))}
         </div>
@@ -327,18 +330,18 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {/* Editorial Tagline */}
             <div>
-              <div style={{ fontFamily: "monospace", fontSize: 10, color: venue.color, letterSpacing: 2, marginBottom: 8, fontWeight: 800 }}>THE EXPERIENCE</div>
+              <div style={{ fontFamily: "monospace", fontSize: 10, color: venue.color, letterSpacing: 2, marginBottom: 8, fontWeight: 800 }}>{t("detail_experience")}</div>
               <div style={{ fontFamily: "Georgia,serif", fontSize: 18, fontWeight: 700, color: "white", lineHeight: 1.3 }}>
-                {venue.type === "Circuit" ? "FIA-GRADE PRECISION. BUILT FOR PEAK PERFORMANCE AND HIGH-SPEED DYNAMICS." :
-                 venue.type === "Karting" ? "REACTIVE AGILITY. TECHNICAL CORNERING IN A CONTROLLED ADRENALINE ENVIRONMENT." :
-                 venue.type === "Airfield" ? "UNRESTRICTED VELOCITY. VAST TARMAC EXPANSE WITH ZERO NOISE LIMITS." :
-                 "URBAN DYNAMICS. CONFIGURABLE LAYOUTS FOR PRECISION DRIFT AND AUTOCROSS."}
+                {venue.type === "Circuit" ? t("detail_desc_circuit") :
+                 venue.type === "Karting" ? t("detail_desc_karting") :
+                 venue.type === "Airfield" ? t("detail_desc_airfield") :
+                 t("detail_desc_lot")}
               </div>
             </div>
 
             {/* Track Blueprint Card */}
             <div>
-              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>TRACK BLUEPRINT</div>
+              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>{t("detail_blueprint")}</div>
               <div style={{ borderRadius: 16, overflow: "hidden", border: "1.5px solid #1a1a1a", background: "#111" }}>
                 <VenueArt type={venue.img} color={venue.color} h={180} />
               </div>
@@ -346,12 +349,12 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
 
             {/* Technical Spec Grid */}
             <div>
-              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>TECHNICAL SPECS</div>
+              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>{t("detail_tech_specs")}</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                 {[
                   { l: t("detail_length").toUpperCase(), v: venue.length || "VARIES" },
-                  { l: "TURNS", v: venue.type === "Circuit" ? "12-15" : "8-10" },
-                  { l: "SURFACE", v: venue.type === "Lot" ? "POLISHED CONCRETE" : "ASPHALT" },
+                  { l: t("detail_turns"), v: venue.type === "Circuit" ? "12-15" : "8-10" },
+                  { l: t("detail_surface"), v: venue.type === "Lot" ? "POLISHED CONCRETE" : "ASPHALT" },
                   { l: t("detail_noise").toUpperCase(), v: venue.noise || "UNLIMITED" }
                 ].map(spec => (
                   <div key={spec.l} style={{ background: "#111", padding: "12px 16px", borderRadius: 12, border: "1px solid #1a1a1a" }}>
@@ -364,12 +367,12 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
 
             {/* Performance Ratings */}
             <div>
-              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>TRACK CHARACTERISTICS</div>
+              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>{t("detail_characteristics")}</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {[
-                  { l: "TECHNICALITY", p: venue.type === "Karting" ? 95 : 75 },
-                  { l: "ADRENALINE", p: venue.type === "Airfield" ? 90 : 85 },
-                  { l: "BEGINNER FRIENDLY", p: venue.type === "Karting" ? 90 : 60 }
+                  { l: t("detail_technicality"), p: venue.type === "Karting" ? 95 : 75 },
+                  { l: t("detail_adrenaline"), p: venue.type === "Airfield" ? 90 : 85 },
+                  { l: t("detail_beginner"), p: venue.type === "Karting" ? 90 : 60 }
                 ].map(rat => (
                   <div key={rat.l}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
@@ -472,7 +475,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                   color: venue.color,
                   letterSpacing: 1,
                   fontWeight: 700
-                }}>SELECT DATE</div>
+                }}>{t("detail_select_date")}</div>
               </div>
 
               {/* Day headers */}
@@ -482,8 +485,8 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                 gap: 4,
                 marginBottom: 10
               }}>
-                {["S", "M", "T", "W", "T", "F", "S"].map(d => (
-                  <div key={d} style={{
+                {dayHeaders.map((d, i) => (
+                  <div key={i} style={{
                     fontFamily: "monospace",
                     fontSize: 10,
                     color: "#888",
@@ -554,7 +557,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                   fontWeight: 700,
                 }}
               >
-                AVAILABLE SLOTS · {selectedDate ? selectedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase() : 'TODAY'}
+                {t("detail_available_slots")} · {selectedDate ? selectedDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' }).toUpperCase() : t("detail_select_date")}
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -601,7 +604,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                             color: "#aaa",
                           }}
                         >
-                          {i === 0 ? "EARLY BIRD · " : ""}2H SESSION
+                          {i === 0 ? `${t("detail_early_bird")} · ` : ""}{t("detail_2h_session")}
                         </div>
                       </div>
                     </div>
@@ -614,7 +617,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                           fontWeight: 700,
                         }}
                       >
-                        {3 - i} SLOTS LEFT
+                        {`${3 - i} ${t("detail_slots_left")}`}
                       </div>
                       {selectedSession === s && (
                         <Icon name="check" size={16} color={venue.color} />
@@ -674,14 +677,14 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                 color: "white",
                 letterSpacing: 1
               }}>
-                MANDATORY SAFETY VIDEO · 8:12
+                {t("detail_safety_video")}
               </div>
             </div>
 
             {/* Briefing Checklist */}
             <div style={{ background: "#111", borderRadius: 16, padding: "20px", border: "1.5px solid #1a1a1a" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                <h3 style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "white" }}>Briefing Checklist</h3>
+                <h3 style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "white" }}>{t("detail_briefing_checklist")}</h3>
                 <div style={{
                   fontFamily: "monospace",
                   fontSize: 9,
@@ -691,16 +694,16 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                   background: briefingComplete ? "rgba(76,175,80,0.1)" : "rgba(255,215,0,0.1)",
                   border: `1px solid ${briefingComplete ? "#4CAF50" : "#FFD700"}`
                 }}>
-                  {briefingComplete ? "COMPLETE" : "PENDING"}
+                  {briefingComplete ? t("detail_status_complete") : t("detail_status_pending")}
                 </div>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {[
-                  { t: "Track Flags & Signals", d: "Understanding yellow, red, and checkered flags." },
-                  { t: "Pit Lane Protocol", d: "Speed limits and entry/exit procedures." },
-                  { t: "Overtaking Rules", d: "Safe zones and 'point-by' requirements." },
-                  { t: "Safety Gear Check", d: "Helmet, suit, and glove standards." }
+                  { title: t("detail_check_1_title"), desc: t("detail_check_1_desc") },
+                  { title: t("detail_check_2_title"), desc: t("detail_check_2_desc") },
+                  { title: t("detail_check_3_title"), desc: t("detail_check_3_desc") },
+                  { title: t("detail_check_4_title"), desc: t("detail_check_4_desc") },
                 ].map((item, i) => (
                   <div key={i} style={{ display: "flex", gap: 14 }}>
                     <div style={{
@@ -718,8 +721,8 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                       {briefingComplete && <Icon name="check" size={12} color="white" />}
                     </div>
                     <div>
-                      <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "white", marginBottom: 2 }}>{item.t}</div>
-                      <div style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "#888", lineHeight: 1.4 }}>{item.d}</div>
+                      <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "white", marginBottom: 2 }}>{item.title}</div>
+                      <div style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "#888", lineHeight: 1.4 }}>{item.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -743,7 +746,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                     cursor: "pointer"
                   }}
                 >
-                  SIGN & COMPLETE BRIEFING
+                  {t("detail_sign_briefing")}
                 </button>
               )}
             </div>
@@ -810,7 +813,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
         >
           {selectedSession
             ? `${t("detail_book")} · ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(venue.price)}`
-            : "SELECT A SESSION FIRST"}
+            : t("detail_select_session")}
         </button>
       </div>
     </div>

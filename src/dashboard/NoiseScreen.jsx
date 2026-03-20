@@ -3,8 +3,10 @@ import Btn from "../components/Btn.jsx";
 import TopBar from "./TopBar.jsx";
 import { DASH as T } from "../constants/theme.js";
 import { NOISE_DATA } from "../constants/dashboard.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const NoiseScreen = () => {
+	const { t } = useLanguage();
 	const [alertsEnabled, setAlertsEnabled] = useState(true);
 	const [hardwareConnected] = useState(true);
 	const current = 84;
@@ -13,9 +15,9 @@ const NoiseScreen = () => {
 	return (
 		<div style={{ animation: "fadeIn 0.3s ease" }}>
 			<TopBar
-				title="Noise Monitor"
-				subtitle="IoT BOUNDARY SENSOR"
-				actions={<Btn label="CONFIGURE SENSOR" icon="settings" />}
+				title={t("d_noise_title")}
+				subtitle={t("d_iot_sensor")}
+				actions={<Btn label={t("d_configure_sensor")} icon="settings" />}
 			/>
 
 			<div
@@ -53,7 +55,7 @@ const NoiseScreen = () => {
 									marginBottom: 4,
 								}}
 							>
-								LIVE READING
+								{t("d_live_reading")}
 							</div>
 							<div
 								style={{
@@ -63,7 +65,7 @@ const NoiseScreen = () => {
 									color: "white",
 								}}
 							>
-								Boundary Sensor · Zone A
+								{t("d_boundary_sensor")}
 							</div>
 						</div>
 						<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -84,7 +86,7 @@ const NoiseScreen = () => {
 									letterSpacing: 1,
 								}}
 							>
-								{hardwareConnected ? "CONNECTED" : "OFFLINE"}
+								{hardwareConnected ? t("d_connected") : t("d_offline")}
 							</span>
 						</div>
 					</div>
@@ -164,12 +166,12 @@ const NoiseScreen = () => {
 						<span
 							style={{ fontFamily: "monospace", fontSize: 9, color: "#FF4500" }}
 						>
-							WARN 90dB
+							{t("d_warn_90")}
 						</span>
 						<span
 							style={{ fontFamily: "monospace", fontSize: 9, color: "#888" }}
 						>
-							LIMIT {limit}dB
+							{t("d_limit")} {limit}dB
 						</span>
 					</div>
 				</div>
@@ -192,31 +194,31 @@ const NoiseScreen = () => {
 							marginBottom: 20,
 						}}
 					>
-						Alert Configuration
+						{t("d_alert_config")}
 					</div>
 					<div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 						{[
 							{
-								label: "SMS alerts to owner",
-								sub: "Send SMS when approaching limit",
+								label: t("d_sms_alerts"),
+								sub: t("d_sms_sub"),
 								on: alertsEnabled,
 								toggle: () => setAlertsEnabled(!alertsEnabled),
 							},
 							{
-								label: "Auto-notify drivers",
-								sub: "Ping drivers in session when >85 dB",
+								label: t("d_notify_drivers"),
+								sub: t("d_notify_sub"),
 								on: true,
 								toggle: () => {},
 							},
 							{
-								label: "Pause bookings at limit",
-								sub: "Block new arrivals when dB limit hit",
+								label: t("d_pause_bookings"),
+								sub: t("d_pause_sub"),
 								on: false,
 								toggle: () => {},
 							},
 							{
-								label: "Daily noise report",
-								sub: "Email summary every evening",
+								label: t("d_daily_report"),
+								sub: t("d_daily_sub"),
 								on: true,
 								toggle: () => {},
 							},
@@ -310,7 +312,7 @@ const NoiseScreen = () => {
 						marginBottom: 20,
 					}}
 				>
-					24-Hour Noise History
+					{t("d_24h_history")}
 				</div>
 				<div
 					style={{
@@ -396,9 +398,9 @@ const NoiseScreen = () => {
 				</div>
 				<div style={{ display: "flex", gap: 16, marginTop: 16 }}>
 					{[
-						{ color: T.green, label: "SAFE (<80dB)" },
-						{ color: T.yellow, label: "WARNING (80-90dB)" },
-						{ color: T.red, label: "CRITICAL (>90dB)" },
+						{ color: T.green, label: t("d_noise_safe") },
+						{ color: T.yellow, label: t("d_noise_warning") },
+						{ color: T.red, label: t("d_noise_critical") },
 					].map((l) => (
 						<div
 							key={l.label}

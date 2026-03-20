@@ -5,8 +5,10 @@ import Btn from "../components/Btn.jsx";
 import TopBar from "./TopBar.jsx";
 import { DASH as T } from "../constants/theme.js";
 import { SLOTS, DAYS, MONTHS } from "../constants/dashboard.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const CalendarScreen = () => {
+	const { t } = useLanguage();
 	const [selectedDay, setSelectedDay] = useState(1);
 	const [currentMonth, setCurrentMonth] = useState(2);
 	const daySlots = SLOTS[selectedDay] || [];
@@ -14,12 +16,12 @@ const CalendarScreen = () => {
 	return (
 		<div style={{ animation: "fadeIn 0.3s ease" }}>
 			<TopBar
-				title="Availability Calendar"
-				subtitle="SLOT MANAGEMENT"
+				title={t("d_avail_calendar")}
+				subtitle={t("d_slot_mgmt")}
 				actions={
 					<>
-						<Btn label="BULK EDIT" icon="refresh" />
-						<Btn label="ADD SLOTS" icon="plus" primary />
+						<Btn label={t("d_bulk_edit")} icon="refresh" />
+						<Btn label={t("d_add_slots")} icon="plus" primary />
 					</>
 				}
 			/>
@@ -91,10 +93,10 @@ const CalendarScreen = () => {
 					{/* Legend */}
 					<div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
 						{[
-							{ color: T.green, label: "Booked" },
-							{ color: T.yellow, label: "Reserved" },
-							{ color: T.borderStrong, label: "Blocked" },
-							{ color: T.blue, label: "Open" },
+							{ color: T.green, label: t("d_cal_booked") },
+							{ color: T.yellow, label: t("d_cal_reserved") },
+							{ color: T.borderStrong, label: t("d_cal_blocked") },
+							{ color: T.blue, label: t("d_cal_open") },
 						].map((l) => (
 							<div
 								key={l.label}
@@ -279,7 +281,7 @@ const CalendarScreen = () => {
 								marginBottom: 4,
 							}}
 						>
-							SELECTED DAY
+							{t("d_selected_day")}
 						</div>
 						<div
 							style={{
@@ -350,7 +352,7 @@ const CalendarScreen = () => {
 													letterSpacing: 1,
 												}}
 											>
-												NO DRIVER ASSIGNED
+												{t("d_no_driver")}
 											</div>
 										)}
 									</div>
@@ -389,22 +391,22 @@ const CalendarScreen = () => {
 						>
 							{[
 								{
-									label: "BOOKED",
+									label: t("d_cal_booked"),
 									v: daySlots.filter((s) => s.status === "booked").length,
 									color: T.green,
 								},
 								{
-									label: "OPEN",
+									label: t("d_cal_open"),
 									v: daySlots.filter((s) => s.status === "open").length,
 									color: T.blue,
 								},
 								{
-									label: "RESERVED",
+									label: t("d_cal_reserved"),
 									v: daySlots.filter((s) => s.status === "reserved").length,
 									color: T.yellow,
 								},
 								{
-									label: "BLOCKED",
+									label: t("d_cal_blocked"),
 									v: daySlots.filter((s) => s.status === "blocked").length,
 									color: T.textMid,
 								},
@@ -442,8 +444,8 @@ const CalendarScreen = () => {
 							))}
 						</div>
 					</div>
-					<Btn label="ADD SLOT FOR THIS DAY" icon="plus" primary />
-					<Btn label="BLOCK ENTIRE DAY" icon="lock" />
+					<Btn label={t("d_add_slot_day")} icon="plus" primary />
+					<Btn label={t("d_block_day")} icon="lock" />
 				</div>
 			</div>
 		</div>

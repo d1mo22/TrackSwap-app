@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import SplashScreen from "./screens/SplashScreen.jsx";
-import MapScreen from "./screens/MapScreen.jsx";
+const MapScreen = lazy(() => import("./screens/MapScreen.jsx"));
 import HomeScreen from "./screens/HomeScreen.jsx";
 import DetailScreen from "./screens/DetailScreen.jsx";
 import InsuranceSelectionScreen from "./screens/InsuranceSelectionScreen.jsx";
@@ -79,7 +79,7 @@ export default function App() {
   };
 
   const renderMain = () => {
-    if (tab === "map") return <MapScreen onVenue={goDetail} />;
+    if (tab === "map") return <Suspense fallback={<div style={{color:"#444",fontFamily:"monospace",fontSize:11,display:"flex",alignItems:"center",justifyContent:"center",height:"100%"}}>LOADING MAP…</div>}><MapScreen onVenue={goDetail} /></Suspense>;
     if (tab === "community") return <CommunityScreen />;
     if (tab === "home") return <HomeScreen onVenue={goDetail}
           favorites={favorites}

@@ -4,46 +4,46 @@ import { DASH as T } from "../constants/theme.js";
 import { useLanguage } from "../i18n/index.jsx";
 
 const SettingsScreen = () => {
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
   return (
 	<div style={{ animation: "fadeIn 0.3s ease" }}>
-		<TopBar title="Venue Settings" subtitle="CIRCUITO DE JEREZ" />
+		<TopBar title={t("d_settings_title")} subtitle="CIRCUITO DE JEREZ" />
 		<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
 			{[
 				{
-					title: "Venue Profile",
+					title: t("d_set_profile"),
 					items: [
-						"Name & description",
-						"Photos gallery",
-						"Facilities checklist",
-						"Surface type & dimensions",
+						t("d_set_name_desc"),
+						t("d_set_photos"),
+						t("d_set_facilities"),
+						t("d_set_surface"),
 					],
 				},
 				{
-					title: "Safety & Compliance",
+					title: t("d_set_safety"),
 					items: [
-						"Safety briefing video",
-						"Noise limit configuration",
-						"Digital waiver template",
-						"Insurance risk tier",
+						t("d_set_briefing"),
+						t("d_set_noise_config"),
+						t("d_set_waiver"),
+						t("d_set_ins_tier"),
 					],
 				},
 				{
-					title: "Notification Preferences",
+					title: t("d_set_notifications"),
 					items: [
-						"New booking alerts",
-						"Cancellation alerts",
-						"Daily summary report",
-						"Noise threshold SMS",
+						t("d_set_new_booking"),
+						t("d_set_cancel_alerts"),
+						t("d_set_daily_summary"),
+						t("d_set_noise_sms"),
 					],
 				},
 				{
-					title: "Payout & Billing",
+					title: t("d_set_payout"),
 					items: [
-						"Bank account details",
-						"Payout schedule",
-						"Invoice history",
-						"Tax documentation",
+						t("d_set_bank"),
+						t("d_set_payout_schedule"),
+						t("d_set_invoices"),
+						t("d_set_tax"),
 					],
 				},
 			].map((section) => (
@@ -104,7 +104,7 @@ const SettingsScreen = () => {
 		</div>
 
 		<div style={{ marginTop: 20, background: T.bgCard, borderRadius: 16, padding: "22px 24px", border: `1px solid ${T.border}` }}>
-			<h2 style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 700, color: T.text, margin: "0 0 14px" }}>Language</h2>
+			<h2 style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 700, color: T.text, margin: "0 0 14px" }}>{t("d_settings_language")}</h2>
 			<div style={{ display: "flex", gap: 10 }}>
 				{["es", "en", "pt"].map((code) => (
 					<button

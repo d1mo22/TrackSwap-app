@@ -48,8 +48,8 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
               <Icon name="car" size={20} color="#FF4500" />
             </div>
             <div>
-              <div style={{ fontFamily: "monospace", fontSize: 12, color: "#FF4500", letterSpacing: 3 }}>MY GARAGE</div>
-              <div style={{ fontFamily: "Georgia,serif", fontSize: 22, fontWeight: 700, color: "white" }}>{editing ? "Edit Vehicle" : "Add Vehicle"}</div>
+              <div style={{ fontFamily: "monospace", fontSize: 12, color: "#FF4500", letterSpacing: 3 }}>{t("car_my_garage").toUpperCase()}</div>
+              <div style={{ fontFamily: "Georgia,serif", fontSize: 22, fontWeight: 700, color: "white" }}>{editing ? t("car_edit_vehicle") : t("car_add_vehicle")}</div>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
       <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 90px" }}>
         {/* Plate */}
         <div style={{ marginBottom: 18 }}>
-          <label htmlFor="car-plate" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>PLATE NUMBER</label>
+          <label htmlFor="car-plate" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>{t("car_plate")}</label>
           <div style={{ background: "#111", border: "1px solid #222", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ background: "#1a2a5e", borderRadius: 4, padding: "2px 6px", fontFamily: "monospace", fontSize: 12, color: "#5b8af0", letterSpacing: 1 }}>ES</div>
             <input id="car-plate" name="plate" autoComplete="off" value={plate} onChange={e => setPlate(e.target.value.toUpperCase())} placeholder="1234 ABC" maxLength={8} style={{ background: "none", border: "none", outline: "none", color: "white", fontSize: 18, fontFamily: "monospace", flex: 1, letterSpacing: 4 }} />
@@ -66,9 +66,9 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
 
         {/* Brand */}
         <div style={{ marginBottom: 18 }}>
-          <label htmlFor="car-brand" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>BRAND</label>
+          <label htmlFor="car-brand" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>{t("car_brand")}</label>
           <div id="car-brand" role="combobox" aria-expanded={showBrand} aria-haspopup="listbox" tabIndex={0} onClick={() => setShowBrand(!showBrand)} onKeyDown={e => (e.key === "Enter" || e.key === " ") && setShowBrand(!showBrand)} style={{ background: "#111", border: "1px solid #222", borderRadius: 12, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}>
-            <span style={{ fontFamily: "Georgia,serif", fontSize: 14, color: brand ? "white" : "#aaa" }}>{brand || "Select brand"}</span>
+            <span style={{ fontFamily: "Georgia,serif", fontSize: 14, color: brand ? "white" : "#aaa" }}>{brand || t("car_select_brand")}</span>
             <Icon name="chevron_down" size={16} color="#888" />
           </div>
           {showBrand && (
@@ -84,7 +84,7 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
 
         {/* Model */}
         <div style={{ marginBottom: 18 }}>
-          <label htmlFor="car-model" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>MODEL</label>
+          <label htmlFor="car-model" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>{t("car_model")}</label>
           <div style={{ background: "#111", border: "1px solid #222", borderRadius: 12, padding: "14px 16px" }}>
             <input id="car-model" name="car-model" autoComplete="off" value={model} onChange={e => setModel(e.target.value)} placeholder="e.g. M3 GT, 911 GT3, R8..." style={{ background: "none", border: "none", outline: "none", color: "white", fontSize: 14, fontFamily: "Georgia,serif", width: "100%" }} />
           </div>
@@ -92,9 +92,9 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
 
         {/* Year */}
         <div style={{ marginBottom: 28 }}>
-          <label htmlFor="car-year" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>YEAR</label>
+          <label htmlFor="car-year" style={{ fontFamily: "monospace", fontSize: 12, color: "#ccc", letterSpacing: 2, marginBottom: 8, display: "block" }}>{t("car_year")}</label>
           <div id="car-year" role="combobox" aria-expanded={showYear} aria-haspopup="listbox" tabIndex={0} onClick={() => setShowYear(!showYear)} onKeyDown={e => (e.key === "Enter" || e.key === " ") && setShowYear(!showYear)} style={{ background: "#111", border: "1px solid #222", borderRadius: 12, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}>
-            <span style={{ fontFamily: "Georgia,serif", fontSize: 14, color: year ? "white" : "#aaa" }}>{year || "Select year"}</span>
+            <span style={{ fontFamily: "Georgia,serif", fontSize: 14, color: year ? "white" : "#aaa" }}>{year || t("car_select_year")}</span>
             <Icon name="chevron_down" size={16} color="#888" />
           </div>
           {showYear && (
@@ -111,7 +111,7 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
         {/* Preview card */}
         {(plate || brand || model) && (
           <div style={{ background: "#111", border: "1px solid #1e1e1e", borderRadius: 16, padding: "16px", marginBottom: 20 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#888", letterSpacing: 2, marginBottom: 12 }}>PREVIEW</div>
+            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#888", letterSpacing: 2, marginBottom: 12 }}>{t("car_preview")}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(255,69,0,0.1)", border: "1px solid rgba(255,69,0,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Icon name="car" size={22} color="#FF4500" />
@@ -150,11 +150,11 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
             </div>
             <div>
               <div style={{ fontFamily: "monospace", fontSize: 12, color: "#FF4500", letterSpacing: 3 }}>PROFILE</div>
-              <div style={{ fontFamily: "Georgia,serif", fontSize: 22, fontWeight: 700, color: "white" }}>My Garage</div>
+              <div style={{ fontFamily: "Georgia,serif", fontSize: 22, fontWeight: 700, color: "white" }}>{t("car_my_garage")}</div>
             </div>
           </div>
           <button onClick={openNew} aria-label="Add new vehicle" style={{ background: "#FF4500", border: "none", borderRadius: 12, padding: "8px 14px", fontFamily: "monospace", fontSize: 12, letterSpacing: 2, color: "white", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
-            <span style={{ fontSize: 16, lineHeight: 1 }}>+</span> ADD
+            {t("car_add_btn")}
           </button>
         </div>
       </div>
@@ -164,8 +164,8 @@ export default function CarScreen({ cars, onSave, onDelete, onBack }) {
             <div style={{ width: 64, height: 64, borderRadius: 20, background: "rgba(255,69,0,0.08)", border: "1px solid rgba(255,69,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
               <Icon name="car" size={28} color="#FF4500" />
             </div>
-            <div style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "#ccc", marginBottom: 8 }}>No vehicles yet</div>
-            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa", letterSpacing: 1 }}>TAP + ADD TO GET STARTED</div>
+            <div style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "#ccc", marginBottom: 8 }}>{t("car_no_vehicles")}</div>
+            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa", letterSpacing: 1 }}>{t("car_add_hint")}</div>
           </div>
         ) : (
           cars.map((car) => (

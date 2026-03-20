@@ -1,15 +1,17 @@
 import Icon from "../components/Icon.jsx";
 import { DASH as T } from "../constants/theme.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 const Sidebar = ({ active, setActive, collapsed, setCollapsed }) => {
+	const { t } = useLanguage();
 	const nav = [
-		{ id: "overview", icon: "grid", label: "Overview" },
-		{ id: "calendar", icon: "calendar", label: "Calendar" },
-		{ id: "bookings", icon: "ticket", label: "Bookings" },
-		{ id: "analytics", icon: "chart", label: "Analytics" },
-		{ id: "noise", icon: "volume", label: "Noise Monitor" },
-		{ id: "pricing", icon: "tag", label: "Dynamic Pricing" },
-		{ id: "settings", icon: "settings", label: "Settings" },
+		{ id: "overview", icon: "grid", label: t("d_nav_overview") },
+		{ id: "calendar", icon: "calendar", label: t("d_nav_calendar") },
+		{ id: "bookings", icon: "ticket", label: t("d_nav_bookings") },
+		{ id: "analytics", icon: "chart", label: t("d_nav_analytics") },
+		{ id: "noise", icon: "volume", label: t("d_nav_noise") },
+		{ id: "pricing", icon: "tag", label: t("d_nav_pricing") },
+		{ id: "settings", icon: "settings", label: t("d_nav_settings") },
 	];
 
 	return (
@@ -96,7 +98,7 @@ const Sidebar = ({ active, setActive, collapsed, setCollapsed }) => {
 									letterSpacing: 2,
 								}}
 							>
-								OWNER PORTAL
+								{t("d_owner_portal")}
 							</div>
 						</div>
 					</>
@@ -125,7 +127,7 @@ const Sidebar = ({ active, setActive, collapsed, setCollapsed }) => {
 								marginBottom: 3,
 							}}
 						>
-							ACTIVE VENUE
+							{t("d_active_venue")}
 						</div>
 						<div
 							style={{
@@ -264,7 +266,7 @@ const Sidebar = ({ active, setActive, collapsed, setCollapsed }) => {
 						<div
 							style={{ fontFamily: "monospace", fontSize: 9, color: "#888" }}
 						>
-							Venue Owner
+							{t("d_venue_owner")}
 						</div>
 					</div>
 				)}
