@@ -5,8 +5,8 @@ export default function SessionStatsScreen({ booking, onBack }) {
   const { name, color, stats, date, session } = booking;
   const pad = (n) => String(n).padStart(2, "0");
 
-  const allMs = stats.laps.map(t => {
-    const [mn, sc] = t.split(":");
+  const allMs = stats.laps.map(lapStr => {
+    const [mn, sc] = lapStr.split(":");
     return parseInt(mn) * 60000 + parseFloat(sc) * 1000;
   });
   const minMs = Math.min(...allMs);
@@ -32,7 +32,7 @@ export default function SessionStatsScreen({ booking, onBack }) {
           </svg>
           <span style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 2, fontWeight: 700 }}>{t("back").toUpperCase()}</span>
         </button>
-        <div style={{ fontFamily: "monospace", fontSize: 11, color: color, letterSpacing: 3, marginBottom: 4, fontWeight: 700 }}>SESSION COMPLETED</div>
+        <div style={{ fontFamily: "monospace", fontSize: 11, color: color, letterSpacing: 3, marginBottom: 4, fontWeight: 700 }}>{t("stats_session_completed")}</div>
         <div style={{ fontFamily: "Georgia,serif", fontSize: 26, fontWeight: 700, color: "white", lineHeight: 1.2 }}>{name}</div>
         <div style={{ fontFamily: "monospace", fontSize: 11, color: "#888", marginTop: 4 }}>{date} · {session}</div>
       </div>
@@ -53,17 +53,17 @@ export default function SessionStatsScreen({ booking, onBack }) {
           }}
         >
           <div style={{ textAlign: "center", flexShrink: 0 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 9, color: color, letterSpacing: 2, marginBottom: 6, fontWeight: 700 }}>POSICIÓN FINAL</div>
+            <div style={{ fontFamily: "monospace", fontSize: 9, color: color, letterSpacing: 2, marginBottom: 6, fontWeight: 700 }}>{t("stats_final_position")}</div>
             <div style={{ fontFamily: "Georgia,serif", fontSize: 64, fontWeight: 800, lineHeight: 1, color: stats.position <= 3 ? podiumColors[stats.position - 1] : "white" }}>
               P{stats.position}
             </div>
-            <div style={{ fontFamily: "monospace", fontSize: 11, color: "#888", marginTop: 4, fontWeight: 700 }}>DE {stats.totalDrivers} PILOTOS</div>
+            <div style={{ fontFamily: "monospace", fontSize: 11, color: "#888", marginTop: 4, fontWeight: 700 }}>{t("stats_of")} {stats.totalDrivers} {t("stats_drivers")}</div>
           </div>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
             {[
-              { l: "BEST LAP", v: stats.bestLap },
-              { l: "AVERAGE TIME", v: stats.avgLap },
-              { l: "TOTAL LAPS", v: stats.totalLaps },
+              { l: t("stats_best_lap"), v: stats.bestLap },
+              { l: t("stats_avg_time"), v: stats.avgLap },
+              { l: t("stats_total_laps"), v: stats.totalLaps },
             ].map(({ l, v }) => (
               <div key={l} style={{ borderBottom: "1.5px solid #1a1a1a", paddingBottom: 8 }}>
                 <div style={{ fontFamily: "monospace", fontSize: 9, color: "#888", letterSpacing: 1.5, marginBottom: 3, fontWeight: 700 }}>{l}</div>
@@ -75,7 +75,7 @@ export default function SessionStatsScreen({ booking, onBack }) {
 
         {/* Lap times */}
         <div style={{ fontFamily: "monospace", fontSize: 10, color: "#888", letterSpacing: 2, marginBottom: 12, fontWeight: 700 }}>
-          LAP TIMES · SAMPLE
+          {t("stats_lap_times")}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
           {stats.laps.map((lapTime, li) => {
@@ -84,7 +84,7 @@ export default function SessionStatsScreen({ booking, onBack }) {
             const thisMs = parseInt(mn) * 60000 + parseFloat(sc) * 1000;
             const pct = maxMs === minMs ? 60 : Math.round(20 + 80 * (1 - (thisMs - minMs) / (maxMs - minMs)));
             const diffMs = thisMs - minMs;
-            const diffStr = diffMs === 0 ? "MEJOR" : `+${(diffMs / 1000).toFixed(3)}s`;
+            const diffStr = diffMs === 0 ? t("stats_best_label") : `+${(diffMs / 1000).toFixed(3)}s`;
             return (
               <div
                 key={li}
@@ -150,10 +150,10 @@ export default function SessionStatsScreen({ booking, onBack }) {
         >
           <div>
             <div style={{ fontFamily: "Georgia,serif", fontSize: 16, fontWeight: 700, color: "white", marginBottom: 4 }}>
-              {isP1 ? "Victory!" : stats.position <= 3 ? `Podium — P${stats.position}` : `Classified P${stats.position}`}
+              {isP1 ? t("stats_victory") : stats.position <= 3 ? `${t("stats_podium")} P${stats.position}` : `${t("stats_classified")} P${stats.position}`}
             </div>
             <div style={{ fontFamily: "monospace", fontSize: 10, color: "#888", letterSpacing: 1, fontWeight: 500 }}>
-              {stats.totalLaps} LAPS · BEST: {stats.bestLap} · AVG: {stats.avgLap}
+              {stats.totalLaps} {t("stats_laps")} · {t("stats_best")}: {stats.bestLap} · {t("stats_avg")}: {stats.avgLap}
             </div>
           </div>
         </div>

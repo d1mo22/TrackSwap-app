@@ -60,9 +60,9 @@ export default function ProfileScreen({ onLicence, onCar, carsCount = 0 }) {
           }}
         >
           {[
-            { v: "12", l: "SESSIONS" },
-            { v: "4.9", l: "RATING" },
-            { v: "3", l: "SAVED" },
+            { v: "12", l: t("profile_sessions") },
+            { v: "4.9", l: t("profile_rating") },
+            { v: "3", l: t("profile_saved") },
           ].map((s) => (
             <div key={s.l} style={{ textAlign: "center" }}>
               <div
@@ -93,10 +93,10 @@ export default function ProfileScreen({ onLicence, onCar, carsCount = 0 }) {
         {[
           { label: t("profile_licence"), action: onLicence },
           { label: `${t("profile_car")}${carsCount > 0 ? ` (${carsCount})` : ""}`, action: onCar },
-          { label: "Payment Method", action: null },
-          { label: "Notifications", action: null },
-          { label: "Insurance History", action: null },
-          { label: "Help & Support", action: null },
+          { label: t("profile_payment"), action: null },
+          { label: t("profile_notifications"), action: null },
+          { label: t("profile_insurance_history"), action: null },
+          { label: t("profile_help"), action: null },
           { label: t("profile_logout"), action: null, danger: true },
         ].map((item, i) => (
           <button

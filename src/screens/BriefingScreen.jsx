@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Icon from "../components/Icon.jsx";
+import { useLanguage } from "../i18n/index.jsx";
 
 export default function BriefingScreen({ venue, onComplete, onBack, isStandalone = false }) {
+  const { t } = useLanguage();
   const [complete, setComplete] = useState(false);
 
   return (
@@ -11,7 +13,7 @@ export default function BriefingScreen({ venue, onComplete, onBack, isStandalone
           <Icon name="chevron_left" size={17} color="white" />
         </button>
         <div>
-          <div style={{ fontFamily: "Georgia,serif", fontSize: 19, fontWeight: 700, color: "white" }}>Safety Briefing</div>
+          <div style={{ fontFamily: "Georgia,serif", fontSize: 19, fontWeight: 700, color: "white" }}>{t("briefing_title")}</div>
           <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa" }}>{venue.name.toUpperCase()}</div>
         </div>
       </div>
@@ -63,14 +65,14 @@ export default function BriefingScreen({ venue, onComplete, onBack, isStandalone
               color: "white",
               letterSpacing: 1
             }}>
-              MANDATORY SAFETY VIDEO · 8:12
+              {t("detail_safety_video")}
             </div>
           </div>
 
           {/* Briefing Checklist */}
           <div style={{ background: "#111", borderRadius: 16, padding: "20px", border: "1.5px solid #1a1a1a" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h3 style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "white" }}>Briefing Checklist</h3>
+              <h3 style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "white" }}>{t("detail_briefing_checklist")}</h3>
               <div style={{
                 fontFamily: "monospace",
                 fontSize: 9,
@@ -80,16 +82,16 @@ export default function BriefingScreen({ venue, onComplete, onBack, isStandalone
                 background: complete ? "rgba(76,175,80,0.1)" : "rgba(255,215,0,0.1)",
                 border: `1px solid ${complete ? "#4CAF50" : "#FFD700"}`
               }}>
-                {complete ? "COMPLETE" : "PENDING"}
+                {complete ? t("detail_status_complete") : t("detail_status_pending")}
               </div>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                { t: "Track Flags & Signals", d: "Understanding yellow, red, and checkered flags." },
-                { t: "Pit Lane Protocol", d: "Speed limits and entry/exit procedures." },
-                { t: "Overtaking Rules", d: "Safe zones and 'point-by' requirements." },
-                { t: "Safety Gear Check", d: "Helmet, suit, and glove standards." }
+                { title: t("detail_check_1_title"), desc: t("detail_check_1_desc") },
+                { title: t("detail_check_2_title"), desc: t("detail_check_2_desc") },
+                { title: t("detail_check_3_title"), desc: t("detail_check_3_desc") },
+                { title: t("detail_check_4_title"), desc: t("detail_check_4_desc") },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", gap: 14 }}>
                   <div style={{
@@ -107,8 +109,8 @@ export default function BriefingScreen({ venue, onComplete, onBack, isStandalone
                     {complete && <Icon name="check" size={12} color="white" />}
                   </div>
                   <div>
-                    <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "white", marginBottom: 2 }}>{item.t}</div>
-                    <div style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "#888", lineHeight: 1.4 }}>{item.d}</div>
+                    <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "white", marginBottom: 2 }}>{item.title}</div>
+                    <div style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "#888", lineHeight: 1.4 }}>{item.desc}</div>
                   </div>
                 </div>
               ))}
@@ -132,7 +134,7 @@ export default function BriefingScreen({ venue, onComplete, onBack, isStandalone
                   cursor: "pointer"
                 }}
               >
-                SIGN & COMPLETE BRIEFING
+                {t("detail_sign_briefing")}
               </button>
             )}
           </div>
@@ -158,7 +160,7 @@ export default function BriefingScreen({ venue, onComplete, onBack, isStandalone
               boxShadow: "0 12px 32px rgba(76,175,80,0.3)",
             }}
           >
-            CONTINUE
+            {t("briefing_continue")}
           </button>
         </div>
       )}

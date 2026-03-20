@@ -14,11 +14,12 @@ export default function BookingsScreen({ onStats, onBriefing, onSelect, bookings
     return new Date(year, month, day, h, m, 0).getTime();
   };
   const BOOKINGS = [...bookings].sort((a, b) => parseDate(b.date, b.session) - parseDate(a.date, a.session));
+  const statusLabel = { Upcoming: t("status_upcoming"), Completed: t("status_completed"), Cancelled: t("status_cancelled") };
 
   return (
     <div style={{ width: "100%", height: "100%", background: "#080808", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ padding: "52px 20px 20px", flexShrink: 0 }}>
-        <div style={{ fontFamily: "monospace", fontSize: 10, color: "#FF4500", letterSpacing: 3, marginBottom: 4 }}>HISTORY</div>
+        <div style={{ fontFamily: "monospace", fontSize: 10, color: "#FF4500", letterSpacing: 3, marginBottom: 4 }}>{t("bookings_history")}</div>
         <div style={{ fontFamily: "Georgia,serif", fontSize: 26, fontWeight: 700, color: "white" }}>{t("bookings_title")}</div>
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 100px" }}>
@@ -55,7 +56,7 @@ export default function BookingsScreen({ onStats, onBriefing, onSelect, bookings
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4, alignItems: "flex-start" }}>
                     <div style={{ fontFamily: "Georgia,serif", fontSize: 14, fontWeight: 700, color: "white", flex: 1, paddingRight: 8 }}>{b.name}</div>
                     <div style={{ background: b.status === "Upcoming" ? "#0d1a0d" : "#1a1a1a", borderRadius: 20, padding: "4px 12px", fontFamily: "monospace", fontSize: 11, color: b.status === "Upcoming" ? "#4CAF50" : "#888", fontWeight: 800, letterSpacing: 1 }}>
-                      {b.status.toUpperCase()}
+                      {statusLabel[b.status] || b.status.toUpperCase()}
                     </div>
                   </div>
                   <div style={{ fontFamily: "monospace", fontSize: 11, color: "#888", fontWeight: 700 }}>{b.date} · {b.session}</div>
@@ -64,7 +65,7 @@ export default function BookingsScreen({ onStats, onBriefing, onSelect, bookings
                     <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6 }}>
                       <div style={{ width: 6, height: 6, borderRadius: "50%", background: b.briefingComplete ? "#4CAF50" : "#FFD700" }} />
                       <span style={{ fontFamily: "monospace", fontSize: 9, color: b.briefingComplete ? "#4CAF50" : "#FFD700", fontWeight: 800, letterSpacing: 1 }}>
-                        BRIEFING {b.briefingComplete ? "OK" : "PENDING"}
+                        {b.briefingComplete ? t("ins_briefing_ok") : t("bookings_briefing_pending")}
                       </span>
                     </div>
                   )}

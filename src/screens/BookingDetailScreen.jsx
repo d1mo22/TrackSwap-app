@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import Icon from "../components/Icon.jsx";
 import VenueArt from "../components/VenueArt.jsx";
 import { AVAILABLE_SESSIONS } from "../constants/venues.js";
+import { useLanguage } from "../i18n/index.jsx";
 
 export default function BookingDetailScreen({ booking, onBack, onDelete, onReschedule, onBriefing, onStats }) {
+  const { t } = useLanguage();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [rescheduleId, setRescheduleId] = useState(null);
   const [now, setNow] = useState(new Date());
@@ -31,6 +33,7 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
   };
 
   const pad = (n) => String(n).padStart(2, "0");
+  const statusLabel = { Upcoming: t("status_upcoming"), Completed: t("status_completed"), Cancelled: t("status_cancelled") };
   const cd = booking.status === "Upcoming" ? getCountdown(booking.date, booking.session) : null;
   const isBriefingPending = booking.status === "Upcoming" && !booking.briefingComplete;
 
@@ -41,7 +44,7 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
           <Icon name="chevron_left" size={17} color="white" />
         </button>
         <div>
-          <div style={{ fontFamily: "Georgia,serif", fontSize: 19, fontWeight: 700, color: "white" }}>Reservation Detail</div>
+          <div style={{ fontFamily: "Georgia,serif", fontSize: 19, fontWeight: 700, color: "white" }}>{t("bkd_title")}</div>
           <div style={{ fontFamily: "monospace", fontSize: 12, color: "#aaa" }}>ID: TS-{booking.id}</div>
         </div>
       </div>
@@ -56,7 +59,7 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
                 <div style={{ fontFamily: "monospace", fontSize: 13, color: "#aaa", fontWeight: 700 }}>{booking.date} · {booking.session}</div>
               </div>
               <div style={{ background: booking.status === "Upcoming" ? "#0d1a0d" : "#1a1a1a", borderRadius: 20, padding: "4px 12px", fontFamily: "monospace", fontSize: 10, color: booking.status === "Upcoming" ? "#4CAF50" : "#888", fontWeight: 800 }}>
-                {booking.status.toUpperCase()}
+                {statusLabel[booking.status] || booking.status.toUpperCase()}
               </div>
             </div>
 
@@ -64,23 +67,23 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
               <div style={{ padding: "16px", background: "rgba(255,215,0,0.08)", border: "1.5px solid rgba(255,215,0,0.2)", borderRadius: 16, marginBottom: 20 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                   <Icon name="zap" size={18} color="#FFD700" />
-                  <span style={{ fontFamily: "monospace", fontSize: 12, color: "#FFD700", fontWeight: 800, letterSpacing: 1 }}>ACTION REQUIRED</span>
+                  <span style={{ fontFamily: "monospace", fontSize: 12, color: "#FFD700", fontWeight: 800, letterSpacing: 1 }}>{t("bkd_action_required")}</span>
                 </div>
                 <p style={{ fontFamily: "Georgia,serif", fontSize: 13, color: "#aaa", lineHeight: 1.5, marginBottom: 16 }}>
-                  A mandatory safety briefing is required for this venue. You can complete it now or at the circuit.
+                  {t("bkd_briefing_required")}
                 </p>
                 <button
                   onClick={() => onBriefing(booking)}
                   style={{ width: "100%", padding: "14px", background: "#FFD700", border: "none", borderRadius: 12, fontFamily: "monospace", fontSize: 11, color: "#111", fontWeight: 800, cursor: "pointer" }}
                 >
-                  COMPLETE BRIEFING NOW
+                  {t("bkd_complete_now")}
                 </button>
               </div>
             )}
 
             {cd && (
               <div style={{ padding: "20px", background: `${booking.color}0d`, border: `1.5px solid ${booking.color}33`, borderRadius: 16, marginBottom: 20, textAlign: "center" }}>
-                <div style={{ fontFamily: "monospace", fontSize: 11, color: booking.color, letterSpacing: 2, marginBottom: 16, fontWeight: 800 }}>REMAINING TIME</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, color: booking.color, letterSpacing: 2, marginBottom: 16, fontWeight: 800 }}>{t("bkd_remaining_time")}</div>
                 <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
                   {[
                     { val: cd.days, label: "D" },
@@ -107,7 +110,7 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <Icon name="zap" size={18} color={booking.color} />
-                  <span style={{ fontFamily: "monospace", fontSize: 11, color: "white", fontWeight: 800, letterSpacing: 1 }}>VIEW SESSION STATS</span>
+                  <span style={{ fontFamily: "monospace", fontSize: 11, color: "white", fontWeight: 800, letterSpacing: 1 }}>{t("bkd_view_stats")}</span>
                 </div>
                 <Icon name="chevron_right" size={16} color="#666" />
               </button>
@@ -117,11 +120,11 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
 
         {booking.status === "Upcoming" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 10, color: "#444", letterSpacing: 2, marginBottom: 4, marginLeft: 4 }}>MANAGE RESERVATION</div>
+            <div style={{ fontFamily: "monospace", fontSize: 10, color: "#444", letterSpacing: 2, marginBottom: 4, marginLeft: 4 }}>{t("bkd_manage")}</div>
 
             {rescheduleId === booking.id ? (
               <div style={{ background: "#111", border: "1.5px solid #1e1e1e", borderRadius: 16, padding: "20px" }}>
-                <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 1, marginBottom: 16, fontWeight: 700 }}>SELECT NEW SESSION TIME</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, color: "#aaa", letterSpacing: 1, marginBottom: 16, fontWeight: 700 }}>{t("bkd_select_session")}</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
                   {AVAILABLE_SESSIONS.filter((s) => s !== booking.session).map((slot) => (
                     <button key={slot} type="button" onClick={() => { onReschedule(booking.id, slot); setRescheduleId(null); }} style={{ background: "#080808", border: `2.5px solid ${booking.color}`, borderRadius: 12, padding: "12px 18px", fontFamily: "monospace", fontSize: 13, color: "white", cursor: "pointer", fontWeight: 800 }}>
@@ -129,14 +132,14 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
                     </button>
                   ))}
                 </div>
-                <button type="button" onClick={() => setRescheduleId(null)} style={{ background: "none", border: "none", fontFamily: "monospace", fontSize: 11, color: "#888", cursor: "pointer", fontWeight: 700, textDecoration: "underline" }}>CANCEL CHANGE</button>
+                <button type="button" onClick={() => setRescheduleId(null)} style={{ background: "none", border: "none", fontFamily: "monospace", fontSize: 11, color: "#888", cursor: "pointer", fontWeight: 700, textDecoration: "underline" }}>{t("bkd_cancel_change")}</button>
               </div>
             ) : confirmDelete ? (
               <div style={{ background: "#1a0000", border: "1.5px solid #3a0000", borderRadius: 16, padding: "20px" }}>
-                <div style={{ fontFamily: "Georgia,serif", fontSize: 15, color: "white", marginBottom: 16 }}>Confirm cancellation? This cannot be undone.</div>
+                <div style={{ fontFamily: "Georgia,serif", fontSize: 15, color: "white", marginBottom: 16 }}>{t("bkd_confirm_cancel")}</div>
                 <div style={{ display: "flex", gap: 12 }}>
-                  <button type="button" onClick={() => setConfirmDelete(false)} style={{ flex: 1, background: "#111", border: "1.5px solid #333", borderRadius: 12, padding: "14px", fontFamily: "monospace", fontSize: 11, color: "#aaa", cursor: "pointer", fontWeight: 700 }}>KEEP BOOKING</button>
-                  <button type="button" onClick={() => { onDelete(booking.id); onBack(); }} style={{ flex: 1, background: "#FF4500", border: "none", borderRadius: 12, padding: "14px", fontFamily: "monospace", fontSize: 11, color: "white", cursor: "pointer", fontWeight: 700 }}>YES, CANCEL</button>
+                  <button type="button" onClick={() => setConfirmDelete(false)} style={{ flex: 1, background: "#111", border: "1.5px solid #333", borderRadius: 12, padding: "14px", fontFamily: "monospace", fontSize: 11, color: "#aaa", cursor: "pointer", fontWeight: 700 }}>{t("bkd_keep")}</button>
+                  <button type="button" onClick={() => { onDelete(booking.id); onBack(); }} style={{ flex: 1, background: "#FF4500", border: "none", borderRadius: 12, padding: "14px", fontFamily: "monospace", fontSize: 11, color: "white", cursor: "pointer", fontWeight: 700 }}>{t("bkd_yes_cancel")}</button>
                 </div>
               </div>
             ) : (
@@ -146,7 +149,7 @@ export default function BookingDetailScreen({ booking, onBack, onDelete, onResch
                   style={{ flex: 1, height: 56, background: "#111", border: "1.5px solid #1a1a1a", borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, cursor: "pointer" }}
                 >
                   <Icon name="edit" size={16} color="white" />
-                  <span style={{ fontFamily: "monospace", fontSize: 11, color: "white", fontWeight: 800, letterSpacing: 1 }}>RESCHEDULE</span>
+                  <span style={{ fontFamily: "monospace", fontSize: 11, color: "white", fontWeight: 800, letterSpacing: 1 }}>{t("bkd_reschedule")}</span>
                 </button>
                 <button
                   onClick={() => setConfirmDelete(true)}
