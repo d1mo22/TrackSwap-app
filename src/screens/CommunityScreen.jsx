@@ -99,7 +99,7 @@ export default function CommunityScreen() {
         <div style={{ fontFamily: "monospace", fontSize: 12, color: "#FF4500", letterSpacing: 3, marginBottom: 4 }}>
           {t("community_drivers")}
         </div>
-        <div style={{ fontFamily: "Georgia,serif", fontSize: 26, fontWeight: 700, color: "white", marginBottom: 16 }}>
+        <div style={{ fontFamily: "Georgia,serif", fontSize: 26, fontWeight: 700, color: "white", marginBottom: 8 }}>
           {t("community_title")}
         </div>
         {/* Tabs */}
