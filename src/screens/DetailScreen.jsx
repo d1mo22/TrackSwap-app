@@ -299,7 +299,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
             border: "2px solid #1a1a1a",
           }}
         >
-          {["info", "sessions", "safety"].map((tabId) => (
+          {["info", "sessions", "safety", "reviews"].map((tabId) => (
             <button
               key={tabId}
               onClick={() => setTab(tabId)}
@@ -307,12 +307,12 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
               type="button"
               style={{
                 flex: 1,
-                padding: "10px",
+                padding: "10px 4px",
                 minHeight: 40,
                 borderRadius: 10,
                 fontFamily: "monospace",
-                fontSize: 10,
-                letterSpacing: 1,
+                fontSize: 9,
+                letterSpacing: 0.5,
                 background: tab === tabId ? "#FF4500" : "transparent",
                 color: tab === tabId ? "white" : "#aaa",
                 border: tab === tabId ? "2.5px solid #FF4500" : "none",
@@ -321,7 +321,7 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                 fontWeight: 700,
               }}
             >
-              {tabId === "info" ? t("detail_tab_info") : tabId === "sessions" ? t("detail_tab_sessions") : t("detail_tab_safety")}
+              {tabId === "info" ? t("detail_tab_info") : tabId === "sessions" ? t("detail_tab_sessions") : tabId === "safety" ? t("detail_tab_safety") : t("detail_tab_reviews")}
             </button>
           ))}
         </div>
@@ -627,6 +627,57 @@ export default function DetailScreen({ venue, onBack, onBook, isFav, toggleFav }
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+        {tab === "reviews" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {/* Rating summary */}
+            <div style={{ background: "#111", borderRadius: 16, padding: "20px", border: "1.5px solid #1a1a1a", display: "flex", alignItems: "center", gap: 20 }}>
+              <div style={{ textAlign: "center", flexShrink: 0 }}>
+                <div style={{ fontFamily: "Georgia,serif", fontSize: 52, fontWeight: 800, color: "white", lineHeight: 1 }}>{venue.rating}</div>
+                <div style={{ display: "flex", gap: 3, justifyContent: "center", margin: "8px 0 6px" }}>
+                  {[1, 2, 3, 4, 5].map(s => (
+                    <span key={s} style={{ color: s <= Math.round(venue.rating) ? "#FFD700" : "#2a2a2a", fontSize: 16 }}>★</span>
+                  ))}
+                </div>
+                <div style={{ fontFamily: "monospace", fontSize: 10, color: "#666", fontWeight: 700 }}>{venue.reviews} {t("detail_reviews")}</div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "monospace", fontSize: 9, color: venue.color, letterSpacing: 2, marginBottom: 10, fontWeight: 800 }}>{t("detail_rating_overall")}</div>
+                {[5, 4, 3, 2, 1].map(star => {
+                  const pct = star === 5 ? 72 : star === 4 ? 18 : star === 3 ? 6 : star === 2 ? 3 : 1;
+                  return (
+                    <div key={star} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                      <span style={{ fontFamily: "monospace", fontSize: 9, color: "#888", width: 8, textAlign: "right", flexShrink: 0 }}>{star}</span>
+                      <div style={{ flex: 1, height: 5, background: "#1a1a1a", borderRadius: 2, overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${pct}%`, background: "#FFD700", borderRadius: 2 }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Review cards */}
+            {(venue.reviewsList || []).map((rev, i) => (
+              <div key={i} style={{ background: "#111", borderRadius: 16, padding: "16px 18px", border: "1.5px solid #1a1a1a" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+                  <div style={{ width: 38, height: 38, borderRadius: 10, background: `${venue.color}22`, border: `1.5px solid ${venue.color}44`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ fontFamily: "monospace", fontSize: 11, color: venue.color, fontWeight: 800 }}>{rev.avatar}</span>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "white", fontWeight: 700, marginBottom: 4 }}>{rev.name}</div>
+                    <div style={{ display: "flex", gap: 2 }}>
+                      {[1, 2, 3, 4, 5].map(s => (
+                        <span key={s} style={{ color: s <= rev.stars ? "#FFD700" : "#2a2a2a", fontSize: 13 }}>★</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p style={{ fontFamily: "Georgia,serif", fontSize: 13, color: "#bbb", lineHeight: 1.55, margin: 0 }}>{t(rev.key)}</p>
+              </div>
+            ))}
           </div>
         )}
 

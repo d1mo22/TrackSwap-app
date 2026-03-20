@@ -100,6 +100,11 @@ const VENUES = [
     sessions: ["09:00", "13:00", "17:00"],
     lat: 36.7082,
     lng: -6.0341,
+    reviewsList: [
+      { avatar: "RM", name: "Raúl M.", stars: 5, key: "rev_jerez_1" },
+      { avatar: "LC", name: "Laura C.", stars: 5, key: "rev_jerez_2" },
+      { avatar: "MP", name: "Marc P.", stars: 4, key: "rev_jerez_3" },
+    ],
   },
   {
     id: 2,
@@ -119,6 +124,11 @@ const VENUES = [
     sessions: ["08:00", "11:00", "15:00"],
     lat: 36.6440,
     lng: -6.3498,
+    reviewsList: [
+      { avatar: "SP", name: "Sergio P.", stars: 5, key: "rev_rota_1" },
+      { avatar: "MG", name: "Marta G.", stars: 4, key: "rev_rota_2" },
+      { avatar: "TB", name: "Tom B.", stars: 5, key: "rev_rota_3" },
+    ],
   },
   {
     id: 3,
@@ -138,6 +148,11 @@ const VENUES = [
     sessions: ["10:00", "12:00", "14:00", "16:00"],
     lat: 41.6950,
     lng: 2.8490,
+    reviewsList: [
+      { avatar: "JR", name: "Javi R.", stars: 5, key: "rev_lloret_1" },
+      { avatar: "AS", name: "Ana S.", stars: 4, key: "rev_lloret_2" },
+      { avatar: "PH", name: "Pete H.", stars: 5, key: "rev_lloret_3" },
+    ],
   },
   {
     id: 4,
@@ -157,6 +172,11 @@ const VENUES = [
     sessions: ["09:00", "14:00"],
     lat: 41.3430,
     lng: 2.1200,
+    reviewsList: [
+      { avatar: "DR", name: "Dani R.", stars: 5, key: "rev_bcn_1" },
+      { avatar: "CM", name: "Clara M.", stars: 4, key: "rev_bcn_2" },
+      { avatar: "HL", name: "Hugo L.", stars: 4, key: "rev_bcn_3" },
+    ],
   },
   {
     id: 5,
@@ -176,6 +196,11 @@ const VENUES = [
     sessions: ["08:00", "11:00", "15:00"],
     lat: 42.5681,
     lng: -2.0132,
+    reviewsList: [
+      { avatar: "PA", name: "Pedro A.", stars: 5, key: "rev_navarra_1" },
+      { avatar: "SL", name: "Sophie L.", stars: 5, key: "rev_navarra_2" },
+      { avatar: "LV", name: "Luis V.", stars: 4, key: "rev_navarra_3" },
+    ],
   },
 ];
 
